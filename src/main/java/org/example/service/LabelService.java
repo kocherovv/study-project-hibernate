@@ -12,6 +12,7 @@ import org.example.repository.impl.LabelRepositoryImpl;
 import org.example.repository.impl.PostRepositoryImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -29,24 +30,10 @@ public class LabelService {
             .toList();
     }
 
-    public LabelDto findById(Integer id) {
-        if (id == null) {
-            throw new NotFoundException(AppStatusCode.NULL_ARGUMENT_EXCEPTION);
-        }
-
-        var labelDto = labelDtoMapper.map(labelRepositoryImpl.findById(id));
-
-        if (labelDto != null) {
-            var posts = postRepositoryImpl.findAllByLabelId(id).stream()
-                .map(postDtoMapper::map)
-                .toList();
-
-            labelDto.setPosts(posts);
-
-            return labelDto;
-        } else {
-            throw new NotFoundException(AppStatusCode.NOT_FOUND_EXCEPTION);
-        }
+    public LabelDto findById(Long id) {
+        return labelRepositoryImpl.findById(id)
+            .map(labelDtoMapper::map)
+            .orElse(null);
     }
 
     public LabelDto create(LabelDto newLabelDto) {
@@ -61,7 +48,7 @@ public class LabelService {
         return labelDto;
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         labelRepositoryImpl.deleteById(id);
 
         log.info("Label with id = {} - deleted.", id);

@@ -1,22 +1,34 @@
 package org.example.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@EqualsAndHashCode(of = "name")
+@ToString(exclude = "posts")
+@Entity
+@Table(name = "label")
 public class Label {
 
-    private final Integer id;
-    private final String name;
-    private final List<Post> posts;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Label(Integer id, String name) {
-        this(id, name, new ArrayList<>());
+    @Column(name = "name")
+    private String name;
+
+    @Builder.Default
+    @ManyToMany(mappedBy = "labels")
+    private List<Post> posts = new ArrayList<>();
+
+    public void addPost(Post post) {
+        posts.add(post);
+        post.getLabels().add(this);
     }
 }

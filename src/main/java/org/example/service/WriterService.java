@@ -12,6 +12,7 @@ import org.example.repository.impl.PostRepositoryImpl;
 import org.example.repository.impl.WriterRepositoryImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -29,22 +30,9 @@ public class WriterService {
             .toList();
     }
 
-    public WriterDto findById(Integer id) {
-        if (id == null) {
-            return null;
-        }
-
-        var writerDto = writerDtoMapper.map(writerRepositoryImpl.findById(id));
-
-        if (writerDto != null) {
-            writerDto.setPosts(postRepositoryImpl.findAllByWriterId(id).stream()
-                .map(postDtoMapper::map)
-                .toList());
-
-            return writerDto;
-        } else {
-            throw new NotFoundException(AppStatusCode.NOT_FOUND_EXCEPTION);
-        }
+    public WriterDto findById(Long id) {
+        return writerRepositoryImpl.findById(id)
+            .map(writerDtoMapper::map).orElse(null);
     }
 
     public WriterDto create(WriterDto writerDto) {
@@ -59,7 +47,7 @@ public class WriterService {
         return writerDto;
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         writerRepositoryImpl.deleteById(id);
 
         log.info("Writer with id = {} - deleted with all his posts.", id);

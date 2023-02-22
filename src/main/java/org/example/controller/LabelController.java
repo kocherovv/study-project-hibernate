@@ -15,7 +15,7 @@ public class LabelController {
         return labelService.findAll();
     }
 
-    public LabelDto findById(Integer id) {
+    public LabelDto findById(Long id) {
         return labelService.findById(id);
     }
 
@@ -27,7 +27,7 @@ public class LabelController {
         labelService.update(labelDto);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         labelService.deleteById(id);
     }
 

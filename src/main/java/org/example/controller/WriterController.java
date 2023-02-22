@@ -15,7 +15,7 @@ public class WriterController {
         return writerService.findAll();
     }
 
-    public WriterDto findById(Integer id) {
+    public WriterDto findById(Long id) {
         return writerService.findById(id);
     }
 
@@ -27,7 +27,7 @@ public class WriterController {
         writerService.update(writerDto);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         writerService.deleteById(id);
     }
 }

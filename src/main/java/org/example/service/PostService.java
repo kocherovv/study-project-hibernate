@@ -29,22 +29,10 @@ public class PostService {
             .toList();
     }
 
-    public PostDto findById(Integer id) {
-        if (id == null) {
-            return null;
-        }
-
-        var postDto = postDtoMapper.map(postRepositoryImpl.findById(id));
-
-        if (postDto != null) {
-            postDto.setLabels(labelRepositoryImpl.findAllByPostId(id).stream()
-                .map(labelDtoMapper::map)
-                .toList());
-
-            return postDto;
-        } else {
-            throw new NotFoundException(AppStatusCode.NOT_FOUND_EXCEPTION);
-        }
+    public PostDto findById(Long id) {
+        return postRepositoryImpl.findById(id)
+            .map(postDtoMapper::map)
+            .orElse(null);
     }
 
     public PostDto create(PostDto postDto) {
@@ -59,7 +47,7 @@ public class PostService {
         return postDto;
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         postRepositoryImpl.deleteById(id);
 
         log.info("Post with id = {} - deleted.", id);

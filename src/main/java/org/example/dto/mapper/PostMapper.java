@@ -8,6 +8,7 @@ import org.example.dto.PostDto;
 public class PostMapper implements Mapper<PostDto, Post> {
 
     private final LabelMapper labelMapper;
+    private final WriterMapper writerMapper;
 
     @Override
     public Post map(PostDto source) {
@@ -17,7 +18,7 @@ public class PostMapper implements Mapper<PostDto, Post> {
             .postStatus(source.getPostStatus())
             .created(source.getCreated())
             .updated(source.getUpdated())
-            .writerId(source.getWriterId())
+            .writer(writerMapper.map(source.getWriterDto()))
             .labels(source.getLabels().stream()
                 .map(labelMapper::map)
                 .toList())

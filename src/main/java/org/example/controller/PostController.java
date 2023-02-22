@@ -15,7 +15,7 @@ public class PostController {
         return postService.findAll();
     }
 
-    public PostDto findById(Integer id) {
+    public PostDto findById(Long id) {
         return postService.findById(id);
     }
 
@@ -27,7 +27,7 @@ public class PostController {
         postService.update(postDto);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         postService.deleteById(id);
     }
 }

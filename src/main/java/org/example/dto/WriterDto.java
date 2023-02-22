@@ -12,12 +12,12 @@ import java.util.List;
 @Data
 public class WriterDto {
 
-    private Integer id;
-    private String firstName;
-    private String lastName;
-    private List<PostDto> posts;
+    private Long id;
 
-    public WriterDto(Integer id, String firstName, String lastName) {
-        this(id, firstName, lastName, new ArrayList<>());
-    }
+    private String firstName;
+
+    private String lastName;
+
+    @Builder.Default
+    private List<PostDto> posts = new ArrayList<>();
 }

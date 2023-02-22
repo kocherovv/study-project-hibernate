@@ -1,29 +1,58 @@
 package org.example.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.example.domain.enums.PostStatus;
+import org.example.listeners.UpdateDateListener;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString(exclude = {"labels", "writer"})
+@EqualsAndHashCode(of = "id")
 @Builder
 @Data
+@Entity
+@Table(name = "post")
+@EntityListeners(UpdateDateListener.class)
 public class Post {
 
-    private final Integer id;
-    private final LocalDateTime created;
-    private final LocalDateTime updated;
-    private final Integer writerId;
-    private final String content;
-    private final PostStatus postStatus;
-    private final List<Label> labels;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Post(Integer id, Integer writerId, LocalDateTime created, LocalDateTime updated,
-                String content, PostStatus postStatus) {
-        this(id, created, updated, writerId, content, postStatus, new ArrayList<>());
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_id")
+    private Writer writer;
+
+    @Column(name = "created")
+    private LocalDateTime created;
+
+    @Column(name = "updated")
+    private LocalDateTime updated;
+
+    @Column(name = "content")
+    private String content;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "post_status")
+    private PostStatus postStatus;
+
+    @Builder.Default
+    @ManyToMany
+    @JoinTable(
+        name = "post_label",
+        joinColumns = @JoinColumn(name = "post_id"),
+        inverseJoinColumns = @JoinColumn(name = "label_id")
+    )
+    private List<Label> labels = new ArrayList<>();
+
+    public void addLabel(Label label) {
+        labels.add(label);
+        label.getPosts().add(this);
     }
 }

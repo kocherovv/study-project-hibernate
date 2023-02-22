@@ -1,23 +1,36 @@
 package org.example.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString(exclude = "posts")
+@EqualsAndHashCode(of = {"firstName", "lastName"})
 @Builder
 @Data
+@Entity
+@Table(name = "writer")
 public class Writer {
 
-    private final Integer id;
-    private final String firstName;
-    private final String lastName;
-    private final List<Post> posts;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Writer(Integer id, String firstName, String lastName) {
-        this(id, firstName, lastName, new ArrayList<>());
-    }
+    @Column(name = "firstname")
+    private String firstName;
+
+    @Column(name = "lastname")
+    private String lastName;
+
+    @Builder.Default
+    @OneToMany(
+        mappedBy = "writer",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    private List<Post> posts = new ArrayList<>();
 }

@@ -12,11 +12,10 @@ import java.util.List;
 @Data
 public class LabelDto {
 
-    private Integer id;
-    private String name;
-    private List<PostDto> posts;
+    private Long id;
 
-    public LabelDto(Integer id, String name) {
-        this(id, name, new ArrayList<>());
-    }
+    private String name;
+
+    @Builder.Default
+    private List<PostDto> posts = new ArrayList<>();
 }
