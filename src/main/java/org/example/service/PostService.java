@@ -6,8 +6,6 @@ import org.example.dto.PostDto;
 import org.example.dto.mapper.LabelDtoMapper;
 import org.example.dto.mapper.PostDtoMapper;
 import org.example.dto.mapper.PostMapper;
-import org.example.exception.NotFoundException;
-import org.example.model.AppStatusCode;
 import org.example.repository.impl.LabelRepositoryImpl;
 import org.example.repository.impl.PostRepositoryImpl;
 
@@ -47,8 +45,8 @@ public class PostService {
         return postDto;
     }
 
-    public void deleteById(Long id) {
-        postRepositoryImpl.deleteById(id);
+    public void deleteById(PostDto id) {
+        postRepositoryImpl.delete(postMapper.map(id));
 
         log.info("Post with id = {} - deleted.", id);
     }

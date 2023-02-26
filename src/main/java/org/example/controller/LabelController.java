@@ -27,7 +27,7 @@ public class LabelController {
         labelService.update(labelDto);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(LabelDto id) {
         labelService.deleteById(id);
     }
 

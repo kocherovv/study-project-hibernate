@@ -33,4 +33,9 @@ public class Writer {
         orphanRemoval = true
     )
     private List<Post> posts = new ArrayList<>();
+
+    public void addPost(Post post) {
+        this.posts.add(post);
+        post.setWriter(this);
+    }
 }

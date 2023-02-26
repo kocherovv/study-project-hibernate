@@ -6,13 +6,10 @@ import org.example.dto.LabelDto;
 import org.example.dto.mapper.LabelDtoMapper;
 import org.example.dto.mapper.LabelMapper;
 import org.example.dto.mapper.PostDtoMapper;
-import org.example.exception.NotFoundException;
-import org.example.model.AppStatusCode;
 import org.example.repository.impl.LabelRepositoryImpl;
 import org.example.repository.impl.PostRepositoryImpl;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -41,35 +38,16 @@ public class LabelService {
     }
 
     public LabelDto update(LabelDto labelDto) {
-        labelRepositoryImpl.update(labelMapper.map(labelDto));
-
-        log.info("Label with id = {} - edited.", labelDto.getId());
-
-        return labelDto;
+        return labelDtoMapper.map(labelRepositoryImpl.update(labelMapper.map(labelDto)));
     }
 
-    public void deleteById(Long id) {
-        labelRepositoryImpl.deleteById(id);
-
-        log.info("Label with id = {} - deleted.", id);
+    public void deleteById(LabelDto id) {
+        labelRepositoryImpl.delete(labelMapper.map(id));
     }
 
     public LabelDto findByName(String name) {
-        if (name == null) {
-            throw new NotFoundException(AppStatusCode.NULL_ARGUMENT_EXCEPTION);
-        }
-        try {
-            var labelDto = labelDtoMapper.map(labelRepositoryImpl.findByName(name));
-
-            var posts = postRepositoryImpl.findAllByLabelId(labelDto.getId()).stream()
-                .map(postDtoMapper::map)
-                .toList();
-
-            labelDto.setPosts(posts);
-
-            return labelDto;
-        } catch (NullPointerException e) {
-            throw new NotFoundException(AppStatusCode.NOT_FOUND_EXCEPTION);
-        }
+        return labelRepositoryImpl.findByName(name)
+            .map(labelDtoMapper::map)
+            .orElse(null);
     }
 }

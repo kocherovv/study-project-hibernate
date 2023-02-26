@@ -1,10 +1,8 @@
 package org.example.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
-import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -13,39 +11,38 @@ import java.util.Optional;
 public abstract class RepositoryBase<E, ID extends Serializable> implements CrudRepository<E, ID> {
 
     private final Class<E> clazz;
-    private final Session session;
+    private final EntityManager entityManager;
 
     @Override
     public List<E> findAll() {
-        var criteriaQuery = session.getCriteriaBuilder().createQuery(clazz);
+        var criteriaQuery = entityManager.getCriteriaBuilder().createQuery(clazz);
         criteriaQuery.from(clazz);
 
-        return session.createQuery(criteriaQuery)
+        return entityManager.createQuery(criteriaQuery)
             .getResultList();
     }
 
     @Override
     public Optional<E> findById(ID id) {
-        return Optional.ofNullable(session.find(clazz, id));
+        return Optional.ofNullable(entityManager.find(clazz, id));
     }
 
     @Override
     public E create(E entity) {
-        session.persist(entity);
+        entityManager.persist(entity);
 
         return entity;
     }
 
     @Override
     public E update(E entity) {
-        session.update(entity);
+        entityManager.merge(entity);
 
         return entity;
     }
 
     @Override
-    public void deleteById(ID id) {
-        session.delete(id);
-        session.flush();
+    public void delete(E entity) {
+        entityManager.remove(entity);
     }
 }

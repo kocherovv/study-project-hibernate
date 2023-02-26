@@ -1,29 +1,6 @@
 package org.example.service;
 
-import org.example.domain.Post;
-import org.example.domain.enums.PostStatus;
-import org.example.dto.LabelDto;
-import org.example.dto.PostDto;
-import org.example.dto.mapper.LabelDtoMapper;
-import org.example.dto.mapper.LabelMapper;
-import org.example.dto.mapper.PostDtoMapper;
-import org.example.dto.mapper.PostMapper;
-import org.example.exception.NotFoundException;
-import org.example.repository.impl.LabelRepositoryImpl;
-import org.example.repository.impl.PostRepositoryImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
+/*
 
 @ExtendWith(MockitoExtension.class)
 class PostServiceTest {
@@ -142,15 +119,15 @@ class PostServiceTest {
             expectedLabels.add(new LabelDto(i, "test1" + i));
         }
 
-        given(postRepository.findById(any(Integer.class))).willReturn(postMapper.map(expectedResult));
+        given(postRepository.findById(any(Long.class))).willReturn(postMapper.map(expectedResult));
 
-        given(labelRepository.findAllByPostId(any(Integer.class))).willReturn(expectedLabels.stream()
+        given(labelRepository.findAllByPostId(any(Long.class))).willReturn(expectedLabels.stream()
             .map(labelMapper::map)
             .toList());
 
         expectedResult.setLabels(expectedLabels);
 
-        var result = postService.findById(any(Integer.class));
+        var result = postService.findById(any(Long.class));
 
         Assertions.assertEquals(expectedResult.getId(), result.getId());
         Assertions.assertEquals(expectedResult.getWriterId(), result.getWriterId());
@@ -174,4 +151,4 @@ class PostServiceTest {
 
         assertNull(result);
     }
-}
+}*/

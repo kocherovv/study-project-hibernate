@@ -6,13 +6,10 @@ import org.example.dto.WriterDto;
 import org.example.dto.mapper.PostDtoMapper;
 import org.example.dto.mapper.WriterDtoMapper;
 import org.example.dto.mapper.WriterMapper;
-import org.example.exception.NotFoundException;
-import org.example.model.AppStatusCode;
 import org.example.repository.impl.PostRepositoryImpl;
 import org.example.repository.impl.WriterRepositoryImpl;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -47,9 +44,7 @@ public class WriterService {
         return writerDto;
     }
 
-    public void deleteById(Long id) {
-        writerRepositoryImpl.deleteById(id);
-
-        log.info("Writer with id = {} - deleted with all his posts.", id);
+    public void deleteById(WriterDto writer) {
+        writerRepositoryImpl.delete(writerMapper.map(writer));
     }
 }

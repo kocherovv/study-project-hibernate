@@ -1,36 +1,41 @@
 package org.example.repository.impl;
 
-import com.querydsl.jpa.impl.JPAQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.Label;
 import org.example.repository.LabelRepository;
 import org.example.repository.RepositoryBase;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 
+import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 public class LabelRepositoryImpl extends RepositoryBase<Label, Long> implements LabelRepository {
 
-    private final Session session;
+    private final EntityManager entityManager;
 
-    public LabelRepositoryImpl(Session session) {
-        super(Label.class, session);
-        this.session = session;
+    public LabelRepositoryImpl(EntityManager entityManager) {
+        super(Label.class, entityManager);
+        this.entityManager = entityManager;
     }
 
     @Override
-    public Label findByName(String name) {
-        return session.createQuery("select l from Label l where l.name = :name", Label.class)
-            .setParameter(name, name)
-            .getSingleResult();
+    public Optional<Label> findByName(String name) {
+        return Optional.ofNullable(
+            entityManager.createQuery("select l from Label l where l.name = :name", Label.class)
+                .setParameter("name", name)
+                .getSingleResult());
     }
 
     @Override
     public List<Label> findAllByPostId(Long postId) {
-        var sql = "SELECT Label.* FROM Label JOIN PostLabel ON PostLabel.label_id = Label.id WHERE PostLabel.Post_id = ?";
+        var sql = "SELECT label.* " +
+            "FROM label RIGHT JOIN post_label " +
+            "ON post_label.label_id = label.id " +
+            "WHERE post_label.post_id = :id";
 
-        return null;
+        return entityManager.createNativeQuery(sql, Label.class)
+            .setParameter("id", postId)
+            .getResultList();
     }
 }

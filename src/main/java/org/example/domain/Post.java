@@ -2,13 +2,12 @@ package org.example.domain;
 
 import lombok.*;
 import org.example.domain.enums.PostStatus;
-import org.example.listeners.UpdateDateListener;
+import org.example.listeners.PostListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +17,7 @@ import java.util.Optional;
 @Data
 @Entity
 @Table(name = "post")
-@EntityListeners(UpdateDateListener.class)
+@EntityListeners(PostListener.class)
 public class Post {
 
     @Id

@@ -27,7 +27,7 @@ public class PostController {
         postService.update(postDto);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(PostDto id) {
         postService.deleteById(id);
     }
 }

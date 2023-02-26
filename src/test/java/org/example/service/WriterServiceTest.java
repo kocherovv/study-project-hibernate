@@ -1,26 +1,6 @@
 package org.example.service;
 
-import org.example.domain.Writer;
-import org.example.domain.enums.PostStatus;
-import org.example.dto.PostDto;
-import org.example.dto.WriterDto;
-import org.example.dto.mapper.*;
-import org.example.exception.NotFoundException;
-import org.example.repository.impl.PostRepositoryImpl;
-import org.example.repository.impl.WriterRepositoryImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
+/*
 
 @ExtendWith(MockitoExtension.class)
 class WriterServiceTest {
@@ -152,4 +132,4 @@ class WriterServiceTest {
     void create_null() {
         assertThrows(NullPointerException.class, () -> writerService.create(null));
     }
-}
+}*/

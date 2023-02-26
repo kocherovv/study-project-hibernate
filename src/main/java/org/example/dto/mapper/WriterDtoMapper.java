@@ -1,6 +1,7 @@
 package org.example.dto.mapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.example.domain.Writer;
 import org.example.dto.WriterDto;
 

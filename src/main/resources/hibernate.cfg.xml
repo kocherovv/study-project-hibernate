@@ -4,21 +4,23 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:postgresql://localhost:32780/postgres</property>
+        <property name="connection.url">jdbc:postgresql://localhost:32768/postgres</property>
         <property name="connection.username">postgres</property>
         <property name="connection.password">postgrespw</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
-        <property name="hibernate.current_session_context.class">thread</property>
+        <property name="hibernate.current_session_context_class">thread</property>
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
-       <!-- <mapping-->
+        <!--<property name="hibernate.hbm2ddl.auto">validate</property>-->
+
+        <!-- <mapping-->
         <mapping class="org.example.domain.Writer"/>
         <mapping class="org.example.domain.Label"/>
         <mapping class="org.example.domain.Post"/>
+        <mapping class="org.example.domain.PostLabel"/>
 
         <!-- DB schema will be updated if needed -->
-        <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
     </session-factory>
 </hibernate-configuration>

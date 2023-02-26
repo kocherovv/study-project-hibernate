@@ -25,3 +25,4 @@ public class PostMapper implements Mapper<PostDto, Post> {
             .build();
     }
 }
+
