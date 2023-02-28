@@ -4,18 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @AllArgsConstructor
 @Builder
 @Data
-public class LabelDto {
+public class LabelReadDto {
 
     private Long id;
 
     private String name;
-
-    @Builder.Default
-    private List<PostDto> posts = new ArrayList<>();
 }

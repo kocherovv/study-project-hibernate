@@ -13,13 +13,12 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
-        <!--<property name="hibernate.hbm2ddl.auto">validate</property>-->
+        <!--<property name="hibernate.hbm2ddl.auto">update</property>-->
 
         <!-- <mapping-->
         <mapping class="org.example.domain.Writer"/>
         <mapping class="org.example.domain.Label"/>
         <mapping class="org.example.domain.Post"/>
-        <mapping class="org.example.domain.PostLabel"/>
 
         <!-- DB schema will be updated if needed -->
     </session-factory>

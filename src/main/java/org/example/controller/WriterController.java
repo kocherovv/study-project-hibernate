@@ -1,7 +1,8 @@
 package org.example.controller;
 
 import lombok.AllArgsConstructor;
-import org.example.dto.WriterDto;
+import org.example.dto.WriterCreateDto;
+import org.example.dto.WriterReadDto;
 import org.example.service.WriterService;
 
 import java.util.List;
@@ -11,23 +12,23 @@ public class WriterController {
 
     private final WriterService writerService;
 
-    public List<WriterDto> findAll() {
+    public List<WriterReadDto> findAll() {
         return writerService.findAll();
     }
 
-    public WriterDto findById(Long id) {
+    public WriterReadDto findById(Long id) {
         return writerService.findById(id);
     }
 
-    public void create(WriterDto writerDto) {
-        writerService.create(writerDto);
+    public void create(WriterCreateDto writerCreateDto) {
+        writerService.create(writerCreateDto);
     }
 
-    public void update(WriterDto writerDto) {
-        writerService.update(writerDto);
+    public void update(WriterReadDto writerReadDto) {
+        writerService.update(writerReadDto);
     }
 
-    public void deleteById(WriterDto id) {
+    public void deleteById(WriterReadDto id) {
         writerService.deleteById(id);
     }
 }

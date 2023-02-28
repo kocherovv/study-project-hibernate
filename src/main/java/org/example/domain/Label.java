@@ -25,11 +25,6 @@ public class Label {
 
     @Builder.Default
     @ManyToMany(mappedBy = "labels")
-    @JoinTable(
-        name = "post_label",
-        joinColumns = @JoinColumn(name = "label_id"),
-        inverseJoinColumns = @JoinColumn(name = "post_id")
-    )
     private List<Post> posts = new ArrayList<>();
 
     public void addPost(Post post) {

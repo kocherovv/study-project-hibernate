@@ -2,52 +2,72 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.dto.LabelDto;
-import org.example.dto.mapper.LabelDtoMapper;
-import org.example.dto.mapper.LabelMapper;
-import org.example.dto.mapper.PostDtoMapper;
+import org.example.domain.Label;
+import org.example.dto.LabelCreateDto;
+import org.example.dto.LabelReadDto;
+import org.example.dto.LabelReadCollectionsDto;
+import org.example.dto.mapper.LabelCreateMapper;
+import org.example.dto.mapper.LabelReadMapper;
+import org.example.dto.mapper.LabelUpdateMapper;
+import org.example.dto.mapper.Mapper;
 import org.example.repository.impl.LabelRepositoryImpl;
-import org.example.repository.impl.PostRepositoryImpl;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class LabelService {
 
     private final LabelRepositoryImpl labelRepositoryImpl;
-    private final PostRepositoryImpl postRepositoryImpl;
-    private final LabelMapper labelMapper;
-    private final LabelDtoMapper labelDtoMapper;
-    private final PostDtoMapper postDtoMapper;
 
-    public List<LabelDto> findAll() {
+    private final LabelCreateMapper labelCreateMapper;
+
+    private final LabelReadMapper labelReadMapper;
+
+    private final LabelUpdateMapper labelUpdateMapper;
+
+    public List<LabelReadDto> findAll() {
         return labelRepositoryImpl.findAll().stream()
-            .map(labelDtoMapper::map)
+            .map(labelReadMapper::mapFrom)
             .toList();
     }
 
-    public LabelDto findById(Long id) {
+    public Optional<LabelReadDto> findById(Long id) {
         return labelRepositoryImpl.findById(id)
-            .map(labelDtoMapper::map)
-            .orElse(null);
+            .map(labelReadMapper::mapFrom);
     }
 
-    public LabelDto create(LabelDto newLabelDto) {
-        return labelDtoMapper.map(labelRepositoryImpl.create(labelMapper.map(newLabelDto)));
+    public <T> Optional<T> findById(Long id, Mapper<Label, T> mapper) {
+        return labelRepositoryImpl.findById(id)
+            .map(mapper::mapFrom);
     }
 
-    public LabelDto update(LabelDto labelDto) {
-        return labelDtoMapper.map(labelRepositoryImpl.update(labelMapper.map(labelDto)));
+    public LabelReadCollectionsDto create(LabelCreateDto labelCreateDto) {
+        var label = labelRepositoryImpl.create(labelCreateMapper.mapFrom(labelCreateDto));
+
+        return labelUpdateMapper.mapFrom(label);
     }
 
-    public void deleteById(LabelDto id) {
-        labelRepositoryImpl.delete(labelMapper.map(id));
+    public LabelReadDto update(LabelReadDto labelReadDto) {
+        var label = labelRepositoryImpl.findById(labelReadDto.getId())
+            .orElseThrow(IllegalArgumentException::new);
+
+        label.setName(labelReadDto.getName());
+
+        labelRepositoryImpl.update(label);
+
+        return labelReadDto;
     }
 
-    public LabelDto findByName(String name) {
+    public void deleteById(Long id) {
+        labelRepositoryImpl.delete(labelRepositoryImpl.findById(id).orElse(null));
+    }
+
+    public Optional<LabelReadDto> findByName(String name) {
         return labelRepositoryImpl.findByName(name)
-            .map(labelDtoMapper::map)
-            .orElse(null);
+            .map(labelReadMapper::mapFrom);
     }
 }

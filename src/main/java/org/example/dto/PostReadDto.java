@@ -12,11 +12,11 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-public class PostDto {
+public class PostReadDto {
 
     private Long id;
 
-    private WriterDto writerDto;
+    private WriterReadDto writerReadDto;
 
     private LocalDateTime created;
 
@@ -27,5 +27,5 @@ public class PostDto {
     private PostStatus postStatus;
 
     @Builder.Default
-    private List<LabelDto> labels = new ArrayList<>();
+    private List<LabelReadDto> labelsDto = new ArrayList<>();
 }

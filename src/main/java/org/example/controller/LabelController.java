@@ -1,37 +1,40 @@
 package org.example.controller;
 
 import lombok.AllArgsConstructor;
-import org.example.dto.LabelDto;
+import org.example.dto.LabelCreateDto;
+import org.example.dto.LabelReadDto;
+import org.example.dto.LabelReadCollectionsDto;
 import org.example.service.LabelService;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 public class LabelController {
 
     private final LabelService labelService;
 
-    public List<LabelDto> findAll() {
+    public List<LabelReadDto> findAll() {
         return labelService.findAll();
     }
 
-    public LabelDto findById(Long id) {
+    public Optional<LabelReadDto> findById(Long id) {
         return labelService.findById(id);
     }
 
-    public LabelDto create(LabelDto newLabelDto) {
+    public LabelReadCollectionsDto create(LabelCreateDto newLabelDto) {
         return labelService.create(newLabelDto);
     }
 
-    public void update(LabelDto labelDto) {
-        labelService.update(labelDto);
+    public void update(LabelReadDto labelReadDto) {
+        labelService.update(labelReadDto);
     }
 
-    public void deleteById(LabelDto id) {
+    public void deleteById(Long id) {
         labelService.deleteById(id);
     }
 
-    public LabelDto findByName(String name) {
+    public Optional<LabelReadDto> findByName(String name) {
         return labelService.findByName(name);
     }
 }

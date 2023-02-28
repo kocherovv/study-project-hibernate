@@ -1,10 +1,13 @@
 package org.example.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.example.dto.mapper.Mapper;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -28,6 +31,11 @@ public abstract class RepositoryBase<E, ID extends Serializable> implements Crud
     }
 
     @Override
+    public Optional<E> findById(ID id, Map<String, Object> properties) {
+        return Optional.ofNullable(entityManager.find(clazz, id, properties));
+    }
+
+    @Override
     public E create(E entity) {
         entityManager.persist(entity);
 
@@ -44,5 +52,11 @@ public abstract class RepositoryBase<E, ID extends Serializable> implements Crud
     @Override
     public void delete(E entity) {
         entityManager.remove(entity);
+        entityManager.flush();
+    }
+
+    @Override
+    public void merge(E entity) {
+        entityManager.merge(entity);
     }
 }

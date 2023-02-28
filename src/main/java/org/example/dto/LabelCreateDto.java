@@ -10,14 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-public class WriterDto {
+public class LabelCreateDto {
 
-    private Long id;
-
-    private String firstName;
-
-    private String lastName;
+    private String name;
 
     @Builder.Default
-    private List<PostDto> posts = new ArrayList<>();
+    private List<Long> posts_id = new ArrayList<>();
 }

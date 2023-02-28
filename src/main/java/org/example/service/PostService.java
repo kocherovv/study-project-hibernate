@@ -2,52 +2,70 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.dto.PostDto;
-import org.example.dto.mapper.LabelDtoMapper;
-import org.example.dto.mapper.PostDtoMapper;
-import org.example.dto.mapper.PostMapper;
+import org.example.domain.Label;
+import org.example.dto.PostCreateDto;
+import org.example.dto.PostReadDto;
+import org.example.dto.mapper.PostCreateMapper;
+import org.example.dto.mapper.PostReadMapper;
 import org.example.repository.impl.LabelRepositoryImpl;
 import org.example.repository.impl.PostRepositoryImpl;
+import org.example.repository.impl.WriterRepositoryImpl;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class PostService {
 
-    private final PostRepositoryImpl postRepositoryImpl;
     private final LabelRepositoryImpl labelRepositoryImpl;
-    private final LabelDtoMapper labelDtoMapper;
-    private final PostDtoMapper postDtoMapper;
-    private final PostMapper postMapper;
+    private final PostRepositoryImpl postRepositoryImpl;
+    private final WriterRepositoryImpl writerRepositoryImpl;
+    private final PostReadMapper postReadMapper;
+    private final PostCreateMapper postCreateMapper;
 
-    public List<PostDto> findAll() {
+    public List<PostReadDto> findAll() {
         return postRepositoryImpl.findAll().stream()
-            .map(postDtoMapper::map)
+            .map(postReadMapper::mapFrom)
             .toList();
     }
 
-    public PostDto findById(Long id) {
+    public Optional<PostReadDto> findById(Long id) {
         return postRepositoryImpl.findById(id)
-            .map(postDtoMapper::map)
-            .orElse(null);
+            .map(postReadMapper::mapFrom);
     }
 
-    public PostDto create(PostDto postDto) {
-        return postDtoMapper.map(postRepositoryImpl.create(postMapper.map(postDto)));
+    public PostReadDto create(PostCreateDto postReadDto) {
+        return postReadMapper.mapFrom(postRepositoryImpl.create(postCreateMapper.mapFrom(postReadDto)));
     }
 
-    public PostDto update(PostDto postDto) {
-        postRepositoryImpl.update(postMapper.map(postDto));
+    public PostReadDto update(PostReadDto postReadDto) {
+        var post = postRepositoryImpl.findById(postReadDto.getId())
+            .orElseThrow(IllegalArgumentException::new);
 
-        log.info("Post with id = {} - updated.", postDto.getId());
+        post.setPostStatus(postReadDto.getPostStatus());
+        post.setContent(postReadDto.getContent());
+        post.setWriter(writerRepositoryImpl.findById(postReadDto.getWriterReadDto().getId())
+            .orElseThrow(IllegalArgumentException::new));
 
-        return postDto;
+        postRepositoryImpl.update(post);
+
+        return postReadDto;
     }
 
-    public void deleteById(PostDto id) {
-        postRepositoryImpl.delete(postMapper.map(id));
+    public void deleteById(Long id) {
+        var post = postRepositoryImpl.findById(id).orElse(null);
 
-        log.info("Post with id = {} - deleted.", id);
+        postRepositoryImpl.delete(post);
+
+        var labels = post.getLabels();
+
+        labels.forEach(label -> {
+            if (label.getPosts().size() == 0) {
+                labelRepositoryImpl.delete(label);
+            }
+        });
     }
 }

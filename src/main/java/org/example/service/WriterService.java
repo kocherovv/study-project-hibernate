@@ -2,49 +2,54 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.dto.WriterDto;
-import org.example.dto.mapper.PostDtoMapper;
-import org.example.dto.mapper.WriterDtoMapper;
-import org.example.dto.mapper.WriterMapper;
-import org.example.repository.impl.PostRepositoryImpl;
+import org.example.dto.WriterCreateDto;
+import org.example.dto.WriterReadDto;
+import org.example.dto.mapper.WriterCreateMapper;
+import org.example.dto.mapper.WriterReadMapper;
 import org.example.repository.impl.WriterRepositoryImpl;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class WriterService {
 
     private final WriterRepositoryImpl writerRepositoryImpl;
-    private final PostRepositoryImpl postRepositoryImpl;
-    private final PostDtoMapper postDtoMapper;
-    private final WriterDtoMapper writerDtoMapper;
-    private final WriterMapper writerMapper;
+    private final WriterReadMapper writerReadMapper;
+    private final WriterCreateMapper writerCreateMapper;
 
-    public List<WriterDto> findAll() {
+    public List<WriterReadDto> findAll() {
         return writerRepositoryImpl.findAll().stream()
-            .map(writerDtoMapper::map)
+            .map(writerReadMapper::mapFrom)
             .toList();
     }
 
-    public WriterDto findById(Long id) {
+    public WriterReadDto findById(Long id) {
         return writerRepositoryImpl.findById(id)
-            .map(writerDtoMapper::map).orElse(null);
+            .map(writerReadMapper::mapFrom).orElse(null);
     }
 
-    public WriterDto create(WriterDto writerDto) {
-        return writerDtoMapper.map(writerRepositoryImpl.create(writerMapper.map(writerDto)));
+    public WriterReadDto create(WriterCreateDto writerCreateDto) {
+        return writerReadMapper.mapFrom(writerRepositoryImpl.create(writerCreateMapper.mapFrom(writerCreateDto)));
     }
 
-    public WriterDto update(WriterDto writerDto) {
-        writerRepositoryImpl.update(writerMapper.map(writerDto));
+    public WriterReadDto update(WriterReadDto writerReadDto) {
+        var writer = writerRepositoryImpl.findById(writerReadDto.getId())
+            .orElseThrow(IllegalArgumentException::new);
 
-        log.info("{} - updated.", writerDto);
+        writer.setFirstName(writerReadDto.getFirstName());
+        writer.setLastName(writerReadDto.getLastName());
 
-        return writerDto;
+        writerRepositoryImpl.update(writer);
+
+        return writerReadDto;
     }
 
-    public void deleteById(WriterDto writer) {
-        writerRepositoryImpl.delete(writerMapper.map(writer));
+    public void deleteById(WriterReadDto writerReadDto) {
+        var writer = writerRepositoryImpl.findById(writerReadDto.getId())
+            .orElse(null);
+        writerRepositoryImpl.delete(writer);
     }
 }
