@@ -3,17 +3,14 @@ package org.example.dto.mapper;
 import lombok.AllArgsConstructor;
 import org.example.domain.Label;
 import org.example.domain.Post;
-import org.example.dto.LabelReadCollectionsDto;
-import org.example.repository.impl.PostRepositoryImpl;
+import org.example.dto.LabelUpdateDto;
 
 @AllArgsConstructor
-public class LabelUpdateMapper implements Mapper<Label, LabelReadCollectionsDto> {
-
-    private PostRepositoryImpl postRepository;
+public class LabelUpdateMapper implements Mapper<Label, LabelUpdateDto> {
 
     @Override
-    public LabelReadCollectionsDto mapFrom(Label entity) {
-        return LabelReadCollectionsDto.builder()
+    public LabelUpdateDto mapFrom(Label entity) {
+        return LabelUpdateDto.builder()
             .id(entity.getId())
             .name(entity.getName())
             .posts_id(entity.getPosts().stream()

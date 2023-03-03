@@ -6,6 +6,7 @@ import org.example.dto.WriterReadDto;
 import org.example.service.WriterService;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 public class WriterController {
@@ -16,7 +17,7 @@ public class WriterController {
         return writerService.findAll();
     }
 
-    public WriterReadDto findById(Long id) {
+    public Optional<WriterReadDto> findById(Long id) {
         return writerService.findById(id);
     }
 

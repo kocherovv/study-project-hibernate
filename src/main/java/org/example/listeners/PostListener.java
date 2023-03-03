@@ -3,7 +3,7 @@ package org.example.listeners;
 import org.example.domain.Post;
 import org.example.domain.enums.PostStatus;
 import org.example.repository.impl.LabelRepositoryImpl;
-import org.example.utils.HibernateUtils;
+import org.example.util.HibernateUtil;
 import org.hibernate.Session;
 
 import javax.persistence.PrePersist;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 public class PostListener {
 
-    private final Session session = HibernateUtils.getProxySession();
+    private final Session session = HibernateUtil.getProxySession();
     private final LabelRepositoryImpl labelRepository = new LabelRepositoryImpl(session);
 
     @PrePersist

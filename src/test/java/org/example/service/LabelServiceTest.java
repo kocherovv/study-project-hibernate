@@ -1,170 +1,265 @@
 package org.example.service;
 
-/*
+import org.example.domain.Label;
+import org.example.domain.Post;
+import org.example.domain.enums.PostStatus;
+import org.example.dto.LabelCreateDto;
+import org.example.dto.LabelUpdateDto;
+import org.example.dto.mapper.*;
+import org.example.graphs.GraphProperty;
+import org.example.graphs.GraphPropertyBuilder;
+import org.example.repository.impl.LabelRepositoryImpl;
+import org.example.repository.impl.PostRepositoryImpl;
+import org.example.repository.impl.WriterRepositoryImpl;
+import org.hibernate.Session;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import util.HibernateTestUtil;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 public class LabelServiceTest {
-    private LabelDtoMapper labelDtoMapper;
-    private LabelMapper labelMapper;
-    private PostDtoMapper postDtoMapper;
-    private PostMapper postMapper;
-    @Mock
-    private LabelRepositoryImpl labelRepository;
-    @Mock
+
+    private Session session;
+
     private PostRepositoryImpl postRepository;
+    private LabelRepositoryImpl labelRepository;
+    private WriterRepositoryImpl writerRepository;
+    private LabelCreateMapper labelCreateMapper;
+    private LabelUpdateMapper labelUpdateMapper;
+    private LabelReadMapper labelReadMapper;
+    private WriterReadMapper writerReadMapper;
+    private WriterCreateMapper writerCreateMapper;
+    private PostCreateMapper postCreateMapper;
+    private PostReadMapper postReadMapper;
     private LabelService labelService;
+    private PostService postService;
+    private WriterService writerService;
+    private GraphPropertyBuilder graphPropertyBuilder;
 
     @BeforeEach
     void init() {
-        labelDtoMapper = new LabelDtoMapper();
-        labelMapper = new LabelMapper();
-        postDtoMapper = new PostDtoMapper(labelDtoMapper);
-        postMapper = new PostMapper(labelMapper);
+        session = HibernateTestUtil.sessionFactory.getCurrentSession();
 
-        labelDtoMapper.setPostDtoMapper(postDtoMapper);
-        labelMapper.setPostMapper(postMapper);
+        session.beginTransaction();
 
-        labelService = new LabelService(
-            labelRepository, postRepository, labelMapper, labelDtoMapper, postDtoMapper);
+        postRepository = mock(PostRepositoryImpl.class);
+        labelRepository = mock(LabelRepositoryImpl.class);
+        writerRepository = mock(WriterRepositoryImpl.class);
+
+        labelCreateMapper = new LabelCreateMapper(postRepository);
+        labelUpdateMapper = new LabelUpdateMapper();
+        labelReadMapper = new LabelReadMapper();
+        writerReadMapper = new WriterReadMapper(postRepository);
+        writerCreateMapper = new WriterCreateMapper(postRepository);
+        postCreateMapper = new PostCreateMapper(writerReadMapper, labelRepository, writerRepository);
+        postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper, labelRepository, writerRepository);
+        graphPropertyBuilder = new GraphPropertyBuilder(session);
+        labelService = new LabelService(labelRepository, labelCreateMapper, labelReadMapper, labelUpdateMapper, graphPropertyBuilder);
+        postService = new PostService(labelRepository, postRepository, writerRepository, postReadMapper, postCreateMapper, graphPropertyBuilder);
+        writerService = new WriterService(writerRepository, writerReadMapper, writerCreateMapper, graphPropertyBuilder);
     }
 
-    @Test
-    void testIFindById_Found() {
-        var expectedLabel = new Label(10, "test", new ArrayList<>());
-        var expectedPosts = new ArrayList<Post>();
-
-        expectedPosts.add(new Post(
-            1, 1, LocalDateTime.now(), LocalDateTime.now(),
-            "123", PostStatus.ACTIVE));
-
-        given(labelRepository.findById(any(Long.class))).willReturn(expectedLabel);
-
-        given(postRepository.findAllByLabelId(any(Long.class))).willReturn(expectedPosts);
-
-        var expectedResult = labelDtoMapper.map(expectedLabel);
-
-        expectedResult.setPosts(expectedPosts.stream()
-            .map(postDtoMapper::map)
-            .toList());
-
-        var returnedDto = labelService.findById(any(Long.class));
-
-        Assertions.assertEquals(expectedResult.getId(), returnedDto.getId());
-        Assertions.assertEquals(expectedResult.getName(), returnedDto.getName());
-        Assertions.assertEquals(expectedResult.getPosts(), returnedDto.getPosts());
-    }
-
-    @Test
-    void testFindById_NotFound() {
-        given(labelRepository.findById(any(Long.class))).willReturn(null);
-
-        assertThrows(NotFoundException.class, () -> labelService.findById(any(Long.class)));
-    }
-
-    @Test
-    void testFindById_Null() {
-        assertThrows(NotFoundException.class, () -> labelService.findById(null));
-    }
-
-    @Test
-    void testFindByName_Found() {
-        var expectedDto = new LabelDto(10, "test", new ArrayList<>());
-
-        given(labelRepository.findByName("test")).willReturn(labelMapper.map(expectedDto));
-
-        var expectedPosts = new ArrayList<PostDto>();
-
-        expectedPosts.add(new PostDto(
-            1, 1, LocalDateTime.now(), LocalDateTime.now(),
-            "123", PostStatus.ACTIVE));
-
-        expectedDto.setPosts(expectedPosts);
-
-        given(postRepository.findAllByLabelId(any(Long.class)))
-            .willReturn(expectedPosts.stream()
-                .map(postMapper::map).toList());
-
-        var result = labelService.findByName("test");
-
-        Assertions.assertEquals(expectedDto.getId(), result.getId());
-        Assertions.assertEquals(expectedDto.getName(), result.getName());
-        Assertions.assertEquals(expectedDto.getPosts(), result.getPosts());
-    }
-
-    @Test
-    void testFindByName_NotFound() {
-        given(labelRepository.findByName("test")).willReturn(null);
-
-        assertThrows(NotFoundException.class, () -> labelService.findByName("test"));
-    }
-
-    @Test
-    void testFindByName_Null() {
-        assertThrows(NotFoundException.class, () -> labelService.findByName(null));
+    @AfterEach
+    void close() {
+        session.getTransaction().commit();
     }
 
     @Test
     void testFindAll() {
         var labels = new ArrayList<Label>();
+        labels.add(Label.builder()
+            .id(1L)
+            .name("123")
+            .build());
 
-        for (Long i = 1L; i < 4L; i++) {
-            labels.add(Label.builder()
-                .id(i)
-                .name("test" + i)
-                .build());
-        }
-        given(labelRepository.findAll()).willReturn(labels);
+        labels.add(Label.builder()
+            .id(2L)
+            .name("222")
+            .build());
+
+        when(labelRepository.findAll()).thenReturn(labels);
+
+        var expected = labels.stream().map(labelReadMapper::mapFrom).toList();
 
         var result = labelService.findAll();
 
-        assertEquals(labels.stream().map(labelDtoMapper::map).toList(), result);
+        assertEquals(expected, result);
     }
 
     @Test
-    void create() {
-        var inputLabelDto = LabelDto.builder()
-            .name("test")
-            .build();
+    void testFindById_Found() {
 
-        var extendedResult = LabelDto.builder()
+        var label = Label.builder()
             .id(1L)
-            .name(inputLabelDto.getName())
+            .name("123")
             .build();
 
-        given(labelRepository.create(labelMapper.map(inputLabelDto)))
-            .willReturn(labelMapper.map(extendedResult));
+        var expectedPosts = new ArrayList<Post>();
+        var post = Post.builder()
+            .id(1L)
+            .postStatus(PostStatus.ACTIVE)
+            .updated(LocalDateTime.now())
+            .created(LocalDateTime.now())
+            .content("asd")
+            .build();
+        expectedPosts.add(post);
 
-        var result = labelService.create(inputLabelDto);
+        label.setPosts(expectedPosts);
 
-        assertEquals(extendedResult.getName(), result.getName());
-        assertEquals(extendedResult.getPosts(), result.getPosts());
-        assertEquals(extendedResult.getId(), result.getId());
-        assertNotNull(result.getId());
+        var expectedLabel = Optional.ofNullable(label);
+
+        when(labelRepository.findById(anyLong(), anyMap())).thenReturn(expectedLabel);
+
+        var expectedResult = expectedLabel.map(labelUpdateMapper::mapFrom);
+
+        var returnedDto = labelService.findById(14L, labelUpdateMapper, GraphProperty.LABEL_WITH_POSTS);
+
+        System.out.println();
+
+        assertEquals(expectedResult.get().getId(), returnedDto.get().getId());
+        assertEquals(expectedResult.get().getName(), returnedDto.get().getName());
+        assertEquals(expectedResult.get().getPosts_id(), returnedDto.get().getPosts_id());
     }
 
     @Test
-    void create_null() {
-        assertThrows(NullPointerException.class, () -> labelService.create(null));
+    void testFindById_Not_Found() {
+        when(labelRepository.findById(anyLong(), anyMap())).thenReturn(Optional.empty());
+
+        var expected = Optional.empty();
+
+        var result = labelService.findById(1L, labelUpdateMapper, GraphProperty.LABEL_WITH_POSTS);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void testCreate() {
+        var posts = new ArrayList<Post>();
+
+        var post = Post.builder()
+            .content("test")
+            .created(LocalDateTime.now())
+            .updated(LocalDateTime.now())
+            .id(1L)
+            .postStatus(PostStatus.ACTIVE)
+            .build();
+
+        posts.add(post);
+
+        var postsId = posts.stream().map(Post::getId).toList();
+
+        var inputDto = LabelCreateDto.builder()
+            .name("Anastasia")
+            .posts_id(postsId)
+            .build();
+
+        var inputEntity = Label.builder()
+            .name("Anastasia")
+            .posts(posts)
+            .build();
+
+        var outputEntity = Label.builder()
+            .id(1L)
+            .name("Anastasia")
+            .posts(posts)
+            .build();
+
+        var expectedDto = LabelUpdateDto.builder()
+            .id(1L)
+            .name("Anastasia")
+            .posts_id(postsId)
+            .build();
+
+        when(postRepository.findById(anyLong())).thenReturn(Optional.ofNullable(post));
+        when(labelRepository.create(inputEntity)).thenReturn(outputEntity);
+
+        var result = labelService.create(inputDto);
+
+        assertEquals(expectedDto, result);
+    }
+
+    @Test
+    void testUpdate() {
+        var posts = new ArrayList<Post>();
+
+        var post = Post.builder()
+            .content("test")
+            .created(LocalDateTime.now())
+            .updated(LocalDateTime.now())
+            .id(1L)
+            .postStatus(PostStatus.ACTIVE)
+            .build();
+
+        posts.add(post);
+
+        var postsId = posts.stream().map(Post::getId).toList();
+
+        var inputDto = LabelUpdateDto.builder()
+            .id(1L)
+            .name("Anastasia")
+            .posts_id(postsId)
+            .build();
+
+        var oldEntity = Label.builder()
+            .id(1L)
+            .name("Dima")
+            .posts(posts)
+            .build();
+
+        var updatedEntity = Label.builder()
+            .id(1L)
+            .name("Anastasia")
+            .posts(posts)
+            .build();
+
+        var expectedDto = LabelUpdateDto.builder()
+            .id(1L)
+            .name("Anastasia")
+            .posts_id(postsId)
+            .build();
+
+        when(labelRepository.findById(updatedEntity.getId())).thenReturn(Optional.ofNullable(oldEntity));
+        when(labelRepository.update(updatedEntity)).thenReturn(updatedEntity);
+
+        var result = labelService.update(inputDto);
+
+        assertEquals(expectedDto, result);
     }
 
     @Test
     void delete() {
-        assertDoesNotThrow(() -> labelService.deleteById(any(Long.class)));
+        assertDoesNotThrow(() -> labelService.deleteById(anyLong()));
     }
 
     @Test
-    void update() {
-        var inputDto = new LabelDto(1, "test");
+    void testFindByName_Found() {
+        var label = Label.builder()
+            .id(1L)
+            .name("123")
+            .build();
 
-        given(labelRepository.update(labelMapper.map(inputDto)))
-            .willReturn(labelMapper.map(inputDto));
+        var expectedLabel = Optional.ofNullable(label);
 
-        var returnedDto = labelService.update(inputDto);
+        when(labelRepository.findByName(anyString())).thenReturn(expectedLabel);
 
-        assertEquals(inputDto, returnedDto);
+        var expectedResult = expectedLabel.map(labelReadMapper::mapFrom);
+
+        var returnedDto = labelService.findByName("test");
+
+        System.out.println();
+
+        assertEquals(expectedResult.get().getId(), returnedDto.get().getId());
+        assertEquals(expectedResult.get().getName(), returnedDto.get().getName());
     }
-
-    @Test
-    void update_null() {
-        assertThrows(NullPointerException.class, () -> labelService.update(null));
-    }*/
 }

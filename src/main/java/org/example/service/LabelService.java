@@ -5,11 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.domain.Label;
 import org.example.dto.LabelCreateDto;
 import org.example.dto.LabelReadDto;
-import org.example.dto.LabelReadCollectionsDto;
+import org.example.dto.LabelUpdateDto;
 import org.example.dto.mapper.LabelCreateMapper;
 import org.example.dto.mapper.LabelReadMapper;
 import org.example.dto.mapper.LabelUpdateMapper;
 import org.example.dto.mapper.Mapper;
+import org.example.graphs.GraphProperty;
+import org.example.graphs.GraphPropertyBuilder;
 import org.example.repository.impl.LabelRepositoryImpl;
 
 import javax.transaction.Transactional;
@@ -22,12 +24,10 @@ import java.util.Optional;
 public class LabelService {
 
     private final LabelRepositoryImpl labelRepositoryImpl;
-
     private final LabelCreateMapper labelCreateMapper;
-
     private final LabelReadMapper labelReadMapper;
-
     private final LabelUpdateMapper labelUpdateMapper;
+    private final GraphPropertyBuilder graphPropertyBuilder;
 
     public List<LabelReadDto> findAll() {
         return labelRepositoryImpl.findAll().stream()
@@ -45,7 +45,12 @@ public class LabelService {
             .map(mapper::mapFrom);
     }
 
-    public LabelReadCollectionsDto create(LabelCreateDto labelCreateDto) {
+    public <T> Optional<T> findById(Long id, Mapper<Label, T> mapper, GraphProperty graphProperty) {
+        return labelRepositoryImpl.findById(id, graphPropertyBuilder.getProperty(graphProperty))
+            .map(mapper::mapFrom);
+    }
+
+    public LabelUpdateDto create(LabelCreateDto labelCreateDto) {
         var label = labelRepositoryImpl.create(labelCreateMapper.mapFrom(labelCreateDto));
 
         return labelUpdateMapper.mapFrom(label);
@@ -60,6 +65,17 @@ public class LabelService {
         labelRepositoryImpl.update(label);
 
         return labelReadDto;
+    }
+
+    public LabelUpdateDto update(LabelUpdateDto labelUpdateDto) {
+        var label = labelRepositoryImpl.findById(labelUpdateDto.getId())
+            .orElseThrow(IllegalArgumentException::new);
+
+        label.setName(labelUpdateDto.getName());
+
+        labelRepositoryImpl.update(label);
+
+        return labelUpdateDto;
     }
 
     public void deleteById(Long id) {

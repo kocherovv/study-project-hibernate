@@ -2,7 +2,6 @@ package org.example.dto.mapper;
 
 import lombok.AllArgsConstructor;
 import org.example.domain.Label;
-import org.example.domain.Post;
 import org.example.dto.LabelCreateDto;
 import org.example.repository.impl.PostRepositoryImpl;
 

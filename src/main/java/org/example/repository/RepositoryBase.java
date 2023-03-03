@@ -1,13 +1,11 @@
 package org.example.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.example.dto.mapper.Mapper;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -53,10 +51,5 @@ public abstract class RepositoryBase<E, ID extends Serializable> implements Crud
     public void delete(E entity) {
         entityManager.remove(entity);
         entityManager.flush();
-    }
-
-    @Override
-    public void merge(E entity) {
-        entityManager.merge(entity);
     }
 }

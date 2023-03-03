@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-public class LabelReadCollectionsDto {
+public class LabelUpdateDto {
 
     private Long id;
 

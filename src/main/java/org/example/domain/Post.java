@@ -42,7 +42,7 @@ public class Post {
     private PostStatus postStatus;
 
     @Builder.Default
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
         name = "post_label",
         joinColumns = @JoinColumn(name = "post_id"),

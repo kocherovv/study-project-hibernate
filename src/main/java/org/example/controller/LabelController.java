@@ -3,7 +3,7 @@ package org.example.controller;
 import lombok.AllArgsConstructor;
 import org.example.dto.LabelCreateDto;
 import org.example.dto.LabelReadDto;
-import org.example.dto.LabelReadCollectionsDto;
+import org.example.dto.LabelUpdateDto;
 import org.example.service.LabelService;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class LabelController {
         return labelService.findById(id);
     }
 
-    public LabelReadCollectionsDto create(LabelCreateDto newLabelDto) {
+    public LabelUpdateDto create(LabelCreateDto newLabelDto) {
         return labelService.create(newLabelDto);
     }
 

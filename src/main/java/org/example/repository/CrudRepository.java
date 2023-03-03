@@ -1,9 +1,10 @@
 package org.example.repository;
 
-import org.example.dto.mapper.Mapper;
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public interface CrudRepository<E, ID extends Serializable> {
 
@@ -20,6 +21,4 @@ public interface CrudRepository<E, ID extends Serializable> {
     E update(E entity);
 
     void delete(E entity);
-
-    void merge(E entity);
 }

@@ -1,4 +1,4 @@
-package org.example.utils;
+package org.example.util;
 
 import lombok.experimental.UtilityClass;
 import org.hibernate.Session;
@@ -9,23 +9,23 @@ import org.hibernate.cfg.Configuration;
 import java.lang.reflect.Proxy;
 
 @UtilityClass
-public class HibernateUtils {
+public class HibernateUtil {
 
-    public final SessionFactory sessionFactory = buildSessionFactory();
+    public final SessionFactory sessionFactory = null;
 
     public static Session getProxySession() {
         return (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(), new Class[]{Session.class},
             (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
     }
 
-    private static SessionFactory buildSessionFactory() {
+    public static SessionFactory buildSessionFactory() {
         Configuration configuration = buildConfiguration();
         configuration.configure();
 
         return configuration.buildSessionFactory();
     }
 
-    private static Configuration buildConfiguration() {
+    public static Configuration buildConfiguration() {
         Configuration configuration = new Configuration();
         configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
 
