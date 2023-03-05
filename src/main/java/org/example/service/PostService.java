@@ -2,7 +2,6 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import lombok.extern.slf4j.Slf4j;
 import org.example.domain.Post;
 import org.example.dto.PostCreateDto;
 import org.example.dto.PostReadDto;
@@ -78,7 +77,7 @@ public class PostService {
     public void deleteById(Long id) throws NotFoundException {
 
         var postToDelete = postRepositoryImpl.findById(id, graphPropertyBuilder
-                .getProperty(GraphPropertyName.POST_WITH_LABELS));
+            .getProperty(GraphPropertyName.POST_WITH_LABELS));
 
         if (postToDelete.isPresent()) {
             postRepositoryImpl.delete(postToDelete.get());

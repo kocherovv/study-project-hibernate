@@ -6,7 +6,6 @@ import org.example.domain.Writer;
 import org.example.domain.enums.PostStatus;
 import org.example.dto.PostCreateDto;
 import org.example.dto.PostReadDto;
-import org.example.dto.WriterReadDto;
 import org.example.dto.mapper.*;
 import org.example.graphs.GraphPropertyBuilder;
 import org.example.graphs.GraphPropertyName;

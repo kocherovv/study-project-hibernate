@@ -2,7 +2,6 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import lombok.extern.slf4j.Slf4j;
 import org.example.domain.Label;
 import org.example.dto.LabelCreateDto;
 import org.example.dto.LabelReadDto;

@@ -2,7 +2,6 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import lombok.extern.slf4j.Slf4j;
 import org.example.domain.Writer;
 import org.example.dto.WriterCreateDto;
 import org.example.dto.WriterReadDto;

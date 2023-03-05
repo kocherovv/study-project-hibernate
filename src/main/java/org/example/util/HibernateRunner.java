@@ -1,8 +1,6 @@
 package org.example.util;
 
 import lombok.extern.log4j.Log4j;
-import lombok.extern.slf4j.Slf4j;
-import org.example.dto.PostCreateDto;
 import org.example.dto.mapper.*;
 import org.example.graphs.GraphPropertyBuilder;
 import org.example.repository.impl.LabelRepositoryImpl;

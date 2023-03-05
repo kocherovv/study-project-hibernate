@@ -1,7 +1,6 @@
 package org.example.repository.impl;
 
 import lombok.extern.log4j.Log4j;
-import lombok.extern.slf4j.Slf4j;
 import org.example.domain.Label;
 import org.example.repository.LabelRepository;
 import org.example.repository.RepositoryBase;
