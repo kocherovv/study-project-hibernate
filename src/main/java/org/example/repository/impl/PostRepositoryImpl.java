@@ -20,10 +20,13 @@ public class PostRepositoryImpl extends RepositoryBase<Post, Long> implements Po
 
     @Override
     public List<Post> findAllByLabelId(Long labelId) {
-        var sql = "SELECT Post.* FROM Post JOIN PostLabel ON PostLabel.post_id = Post.id WHERE PostLabel.label_id = ?";
+        var sql =
+            "SELECT Post.* FROM Post " +
+            "JOIN PostLabel ON PostLabel.post_id = Post.id " +
+            "WHERE PostLabel.label_id = :id";
 
         return entityManager.createNativeQuery(sql, Post.class)
-            .setParameter(1, labelId)
+            .setParameter("id", labelId)
             .getResultList();
     }
 

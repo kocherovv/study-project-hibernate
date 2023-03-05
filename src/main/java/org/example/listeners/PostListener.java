@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 public class PostListener {
 
     @PrePersist
-    public void prePersist(Post entity) {
+    public void fillPrePersistParameters(Post entity) {
         entity.setCreated(LocalDateTime.now());
         entity.setUpdated(LocalDateTime.now());
         entity.setPostStatus(PostStatus.ACTIVE);
     }
 
     @PreUpdate
-    public void preUpdate(Post entity) {
+    public void updateLastChangeDate(Post entity) {
         entity.setUpdated(LocalDateTime.now());
     }
 }
