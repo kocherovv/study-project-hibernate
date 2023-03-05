@@ -9,5 +9,6 @@ public class NotFoundException extends RuntimeException {
     }
 
     public NotFoundException() {
+        super(AppStatusCode.NOT_FOUND_EXCEPTION.getMessage());
     }
 }

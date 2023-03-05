@@ -65,12 +65,12 @@ public class PostService {
 
     public PostReadDto update(PostReadDto postReadDto) {
         var post = postRepositoryImpl.findById(postReadDto.getId())
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(NotFoundException::new);
 
         post.setPostStatus(postReadDto.getPostStatus());
         post.setContent(postReadDto.getContent());
         post.setWriter(writerRepositoryImpl.findById(postReadDto.getWriterReadDto().getId())
-            .orElseThrow(IllegalArgumentException::new));
+            .orElseThrow(NotFoundException::new));
 
         return postReadMapper.mapFrom(postRepositoryImpl.update(post));
     }

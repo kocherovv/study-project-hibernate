@@ -65,7 +65,7 @@ public class LabelService {
 
     public LabelReadDto update(LabelReadDto labelReadDto) {
         var label = labelRepositoryImpl.findById(labelReadDto.getId())
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(NotFoundException::new);
 
         label.setName(labelReadDto.getName());
 
@@ -76,7 +76,7 @@ public class LabelService {
 
     public LabelUpdateDto update(LabelUpdateDto labelUpdateDto) {
         var label = labelRepositoryImpl.findById(labelUpdateDto.getId())
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(NotFoundException::new);
 
         label.setName(labelUpdateDto.getName());
 

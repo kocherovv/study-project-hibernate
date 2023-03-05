@@ -6,27 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3400a196-9af5-4a8a-bd59-b10ad98bd3d9" name="Changes" comment="inWork_tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/PostCreateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/PostCreateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostCreateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostCreateMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostReadMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostReadMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterCreateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterCreateMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterReadMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterReadMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/NotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/exception/NotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/GraphProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/graphs/GraphPropertyName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/GraphPropertyBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/graphs/GraphPropertyBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/listeners/PostListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/listeners/PostListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/RepositoryBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/RepositoryBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/LabelRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/LabelRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/PostRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/PostRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/WriterRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/WriterRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/AppStatusCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/AppStatusCode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/LabelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/LabelService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/WriterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/WriterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/util/HibernateRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/util/HibernateRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/LabelServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/LabelServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/PostServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/PostServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/WriterServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/WriterServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -258,7 +241,7 @@
       <option name="presentableId" value="Default" />
       <updated>1676623269114</updated>
       <workItem from="1676623270299" duration="146509000" />
-      <workItem from="1677656029155" duration="70136000" />
+      <workItem from="1677656029155" duration="71170000" />
     </task>
     <task id="LOCAL-00001" summary="inWork">
       <created>1677076804162</created>
@@ -295,7 +278,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677995335368</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="inWork_tests">
+      <created>1678001567486</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1678001567486</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
