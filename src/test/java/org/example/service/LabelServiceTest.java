@@ -4,8 +4,10 @@ import org.example.domain.Label;
 import org.example.domain.Post;
 import org.example.domain.enums.PostStatus;
 import org.example.dto.LabelCreateDto;
+import org.example.dto.LabelReadDto;
 import org.example.dto.LabelUpdateDto;
 import org.example.dto.mapper.*;
+import org.example.exception.NotFoundException;
 import org.example.graphs.GraphPropertyBuilder;
 import org.example.graphs.GraphPropertyName;
 import org.example.repository.impl.LabelRepositoryImpl;
@@ -21,8 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class LabelServiceTest {
@@ -187,7 +188,7 @@ public class LabelServiceTest {
     }
 
     @Test
-    void testUpdate() {
+    void testUpdate_UpdateDto() {
         var posts = new ArrayList<Post>();
 
         var post = Post.builder()
@@ -235,14 +236,22 @@ public class LabelServiceTest {
     }
 
     @Test
-    void delete() {
+    void delete_Found() {
         when(labelRepository.findById(anyLong()))
             .thenReturn(Optional.ofNullable(Label.builder()
                 .id(1L)
                 .name("123")
                 .build()));
 
-        assertDoesNotThrow(() -> labelService.deleteById(anyLong()));
+        assertDoesNotThrow(() -> labelService.deleteById(1L));
+    }
+
+    @Test
+    void delete_NotFound() {
+        when(labelRepository.findById(anyLong()))
+            .thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> labelService.deleteById(anyLong()));
     }
 
     @Test
@@ -264,5 +273,16 @@ public class LabelServiceTest {
 
         assertEquals(expectedResult.get().getId(), returnedDto.get().getId());
         assertEquals(expectedResult.get().getName(), returnedDto.get().getName());
+    }
+
+    @Test
+    void testFindByName_Not_Found() {
+        when(labelRepository.findByName(anyString())).thenReturn(Optional.empty());
+
+        var expected = Optional.empty();
+
+        var result = labelService.findByName("test");
+
+        assertEquals(expected, result);
     }
 }

@@ -7,6 +7,7 @@ import org.example.domain.enums.PostStatus;
 import org.example.dto.PostCreateDto;
 import org.example.dto.PostReadDto;
 import org.example.dto.mapper.*;
+import org.example.exception.NotFoundException;
 import org.example.graphs.GraphPropertyBuilder;
 import org.example.graphs.GraphPropertyName;
 import org.example.repository.impl.LabelRepositoryImpl;
@@ -22,8 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class PostServiceTest {
@@ -305,5 +305,13 @@ public class PostServiceTest {
         when(postRepository.findById(anyLong(), anyMap())).thenReturn(Optional.ofNullable(post));
 
         assertDoesNotThrow(() -> postService.deleteById(1L));
+    }
+
+    @Test
+    void delete_NotFound() {
+        when(postRepository.findById(anyLong()))
+            .thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> postService.deleteById(1L));
     }
 }

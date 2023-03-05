@@ -6,6 +6,7 @@ import org.example.domain.enums.PostStatus;
 import org.example.dto.WriterCreateDto;
 import org.example.dto.WriterReadDto;
 import org.example.dto.mapper.*;
+import org.example.exception.NotFoundException;
 import org.example.graphs.GraphPropertyBuilder;
 import org.example.graphs.GraphPropertyName;
 import org.example.repository.impl.LabelRepositoryImpl;
@@ -21,8 +22,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class WriterServiceTest {
@@ -215,5 +215,13 @@ public class WriterServiceTest {
         when(writerRepository.findById(anyLong())).thenReturn(Optional.ofNullable(writer));
 
         assertDoesNotThrow(() -> writerService.deleteById(1L));
+    }
+
+    @Test
+    void delete_NotFound() {
+        when(writerRepository.findById(anyLong()))
+            .thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> writerService.deleteById(1L));
     }
 }

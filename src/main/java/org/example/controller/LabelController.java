@@ -26,8 +26,8 @@ public class LabelController {
         return labelService.create(newLabelDto);
     }
 
-    public void update(LabelReadDto labelReadDto) {
-        labelService.update(labelReadDto);
+    public void update(LabelUpdateDto labelUpdateDto) {
+        labelService.update(labelUpdateDto);
     }
 
     public void deleteById(Long id) {
