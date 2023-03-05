@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 public class PostCreateDto {
 
-    private WriterReadDto writerReadDto;
+    private Long writerId;
 
     private LocalDateTime created;
 

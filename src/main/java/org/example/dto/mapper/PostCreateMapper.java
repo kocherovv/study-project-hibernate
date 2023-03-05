@@ -9,8 +9,6 @@ import org.example.repository.impl.WriterRepositoryImpl;
 @AllArgsConstructor
 public class PostCreateMapper implements Mapper<PostCreateDto, Post> {
 
-    private WriterReadMapper writerReadMapper;
-
     private LabelRepositoryImpl labelRepository;
 
     private WriterRepositoryImpl writerRepository;
@@ -18,7 +16,7 @@ public class PostCreateMapper implements Mapper<PostCreateDto, Post> {
     @Override
     public Post mapFrom(PostCreateDto dto) {
         return Post.builder()
-            .writer(writerRepository.findById(dto.getWriterReadDto().getId())
+            .writer(writerRepository.findById(dto.getWriterId())
                 .orElseThrow(IllegalArgumentException::new))
             .content(dto.getContent())
             .labels(dto.getLabels_id().stream()

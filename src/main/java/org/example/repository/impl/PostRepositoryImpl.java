@@ -1,5 +1,6 @@
 package org.example.repository.impl;
 
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.Post;
 import org.example.repository.PostRepository;
@@ -8,7 +9,7 @@ import org.example.repository.RepositoryBase;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-@Slf4j
+@Log4j
 public class PostRepositoryImpl extends RepositoryBase<Post, Long> implements PostRepository {
 
     private final EntityManager entityManager;
@@ -29,14 +30,14 @@ public class PostRepositoryImpl extends RepositoryBase<Post, Long> implements Po
 
     @Override
     public List<Post> findAllByWriterId(Long writerId) {
-        var cb = entityManager.getCriteriaBuilder();
-        var criteria = cb.createQuery(Post.class);
+        var criteriaBuilder = entityManager.getCriteriaBuilder();
+        var criteria = criteriaBuilder.createQuery(Post.class);
 
         var post = criteria.from(Post.class);
         var writer = post.join("writer");
 
         criteria.select(post).where(
-            cb.equal(writer.get("id"), writerId)
+            criteriaBuilder.equal(writer.get("id"), writerId)
         );
 
         return entityManager.createQuery(criteria)

@@ -12,6 +12,7 @@ import java.util.Optional;
 public abstract class RepositoryBase<E, ID extends Serializable> implements CrudRepository<E, ID> {
 
     private final Class<E> clazz;
+
     private final EntityManager entityManager;
 
     @Override

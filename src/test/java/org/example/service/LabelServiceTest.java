@@ -6,8 +6,8 @@ import org.example.domain.enums.PostStatus;
 import org.example.dto.LabelCreateDto;
 import org.example.dto.LabelUpdateDto;
 import org.example.dto.mapper.*;
-import org.example.graphs.GraphProperty;
 import org.example.graphs.GraphPropertyBuilder;
+import org.example.graphs.GraphPropertyName;
 import org.example.repository.impl.LabelRepositoryImpl;
 import org.example.repository.impl.PostRepositoryImpl;
 import org.example.repository.impl.WriterRepositoryImpl;
@@ -57,10 +57,10 @@ public class LabelServiceTest {
         labelCreateMapper = new LabelCreateMapper(postRepository);
         labelUpdateMapper = new LabelUpdateMapper();
         labelReadMapper = new LabelReadMapper();
-        writerReadMapper = new WriterReadMapper(postRepository);
-        writerCreateMapper = new WriterCreateMapper(postRepository);
-        postCreateMapper = new PostCreateMapper(writerReadMapper, labelRepository, writerRepository);
-        postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper, labelRepository, writerRepository);
+        writerReadMapper = new WriterReadMapper();
+        writerCreateMapper = new WriterCreateMapper();
+        postCreateMapper = new PostCreateMapper(labelRepository, writerRepository);
+        postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper);
         graphPropertyBuilder = new GraphPropertyBuilder(session);
         labelService = new LabelService(labelRepository, labelCreateMapper, labelReadMapper, labelUpdateMapper, graphPropertyBuilder);
         postService = new PostService(labelRepository, postRepository, writerRepository, postReadMapper, postCreateMapper, graphPropertyBuilder);
@@ -120,7 +120,7 @@ public class LabelServiceTest {
 
         var expectedResult = expectedLabel.map(labelUpdateMapper::mapFrom);
 
-        var returnedDto = labelService.findById(14L, labelUpdateMapper, GraphProperty.LABEL_WITH_POSTS);
+        var returnedDto = labelService.findById(14L, labelUpdateMapper, GraphPropertyName.LABEL_WITH_POSTS);
 
         System.out.println();
 
@@ -135,7 +135,7 @@ public class LabelServiceTest {
 
         var expected = Optional.empty();
 
-        var result = labelService.findById(1L, labelUpdateMapper, GraphProperty.LABEL_WITH_POSTS);
+        var result = labelService.findById(1L, labelUpdateMapper, GraphPropertyName.LABEL_WITH_POSTS);
 
         assertEquals(expected, result);
     }

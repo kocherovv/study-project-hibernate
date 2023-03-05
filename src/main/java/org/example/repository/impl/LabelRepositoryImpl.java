@@ -1,5 +1,6 @@
 package org.example.repository.impl;
 
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.Label;
 import org.example.repository.LabelRepository;
@@ -9,7 +10,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
+@Log4j
 public class LabelRepositoryImpl extends RepositoryBase<Label, Long> implements LabelRepository {
 
     private final EntityManager entityManager;

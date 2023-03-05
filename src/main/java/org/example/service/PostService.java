@@ -1,6 +1,7 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.Post;
 import org.example.dto.PostCreateDto;
@@ -8,8 +9,10 @@ import org.example.dto.PostReadDto;
 import org.example.dto.mapper.Mapper;
 import org.example.dto.mapper.PostCreateMapper;
 import org.example.dto.mapper.PostReadMapper;
-import org.example.graphs.GraphProperty;
+import org.example.exception.NotFoundException;
 import org.example.graphs.GraphPropertyBuilder;
+import org.example.graphs.GraphPropertyName;
+import org.example.model.AppStatusCode;
 import org.example.repository.impl.LabelRepositoryImpl;
 import org.example.repository.impl.PostRepositoryImpl;
 import org.example.repository.impl.WriterRepositoryImpl;
@@ -19,15 +22,20 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Slf4j
+@Log4j
 @Transactional
 public class PostService {
 
     private final LabelRepositoryImpl labelRepositoryImpl;
+
     private final PostRepositoryImpl postRepositoryImpl;
+
     private final WriterRepositoryImpl writerRepositoryImpl;
+
     private final PostReadMapper postReadMapper;
+
     private final PostCreateMapper postCreateMapper;
+
     private final GraphPropertyBuilder graphPropertyBuilder;
 
     public List<PostReadDto> findAll() {
@@ -46,8 +54,8 @@ public class PostService {
             .map(mapper::mapFrom);
     }
 
-    public <T> Optional<T> findById(Long id, Mapper<Post, T> mapper, GraphProperty graphProperty) {
-        return postRepositoryImpl.findById(id, graphPropertyBuilder.getProperty(graphProperty))
+    public <T> Optional<T> findById(Long id, Mapper<Post, T> mapper, GraphPropertyName graphPropertyName) {
+        return postRepositoryImpl.findById(id, graphPropertyBuilder.getProperty(graphPropertyName))
             .map(mapper::mapFrom);
     }
 
@@ -67,20 +75,23 @@ public class PostService {
         return postReadMapper.mapFrom(postRepositoryImpl.update(post));
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws NotFoundException {
 
-        var post = postRepositoryImpl.findById(id, graphPropertyBuilder
-                .getProperty(GraphProperty.POST_WITH_LABELS))
-            .orElse(null);
+        var postToDelete = postRepositoryImpl.findById(id, graphPropertyBuilder
+                .getProperty(GraphPropertyName.POST_WITH_LABELS));
 
-        postRepositoryImpl.delete(post);
+        if (postToDelete.isPresent()) {
+            postRepositoryImpl.delete(postToDelete.get());
 
-        var labels = post.getLabels();
+            var labelList = postToDelete.get().getLabels();
 
-        labels.forEach(label -> {
-            if (label.getPosts().size() == 0) {
-                labelRepositoryImpl.delete(label);
-            }
-        });
+            labelList.forEach(label -> {
+                if (label.getPosts().size() == 0) {
+                    labelRepositoryImpl.delete(label);
+                }
+            });
+        } else {
+            throw new NotFoundException(AppStatusCode.NOT_FOUND_EXCEPTION);
+        }
     }
 }

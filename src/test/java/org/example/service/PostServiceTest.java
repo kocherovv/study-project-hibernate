@@ -8,8 +8,8 @@ import org.example.dto.PostCreateDto;
 import org.example.dto.PostReadDto;
 import org.example.dto.WriterReadDto;
 import org.example.dto.mapper.*;
-import org.example.graphs.GraphProperty;
 import org.example.graphs.GraphPropertyBuilder;
+import org.example.graphs.GraphPropertyName;
 import org.example.repository.impl.LabelRepositoryImpl;
 import org.example.repository.impl.PostRepositoryImpl;
 import org.example.repository.impl.WriterRepositoryImpl;
@@ -21,8 +21,6 @@ import util.HibernateTestUtil;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -61,10 +59,10 @@ public class PostServiceTest {
         labelCreateMapper = new LabelCreateMapper(postRepository);
         labelUpdateMapper = new LabelUpdateMapper();
         labelReadMapper = new LabelReadMapper();
-        writerReadMapper = new WriterReadMapper(postRepository);
-        writerCreateMapper = new WriterCreateMapper(postRepository);
-        postCreateMapper = new PostCreateMapper(writerReadMapper, labelRepository, writerRepository);
-        postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper, labelRepository, writerRepository);
+        writerReadMapper = new WriterReadMapper();
+        writerCreateMapper = new WriterCreateMapper();
+        postCreateMapper = new PostCreateMapper(labelRepository, writerRepository);
+        postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper);
         graphPropertyBuilder = new GraphPropertyBuilder(session);
         labelService = new LabelService(labelRepository, labelCreateMapper, labelReadMapper, labelUpdateMapper, graphPropertyBuilder);
         postService = new PostService(labelRepository, postRepository, writerRepository, postReadMapper, postCreateMapper, graphPropertyBuilder);
@@ -147,7 +145,7 @@ public class PostServiceTest {
 
         var expectedResult = expectedPost.map(postReadMapper::mapFrom);
 
-        var returnedDto = postService.findById(14L, postReadMapper, GraphProperty.POST_WITH_LABELS_WRITERS);
+        var returnedDto = postService.findById(14L, postReadMapper, GraphPropertyName.POST_WITH_LABELS_WRITERS);
 
         assertEquals(expectedResult.get().getId(), returnedDto.get().getId());
         assertEquals(expectedResult.get().getContent(), returnedDto.get().getContent());
@@ -162,7 +160,7 @@ public class PostServiceTest {
 
         var expected = Optional.empty();
 
-        var result = postService.findById(1L, postReadMapper, GraphProperty.POST_WITH_LABELS_WRITERS);
+        var result = postService.findById(1L, postReadMapper, GraphPropertyName.POST_WITH_LABELS_WRITERS);
 
         assertEquals(expected, result);
     }
@@ -186,14 +184,8 @@ public class PostServiceTest {
             .id(1L)
             .build();
 
-        var writerDto = WriterReadDto.builder()
-            .firstName("test")
-            .lastName("test")
-            .id(1L)
-            .build();
-
         var inputDto = PostCreateDto.builder()
-            .writerReadDto(writerDto)
+            .writerId(1L)
             .labels_id(labelsId)
             .content("test")
             .build();

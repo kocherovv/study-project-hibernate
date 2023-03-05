@@ -1,6 +1,6 @@
 package org.example.graphs;
 
-public enum GraphProperty {
+public enum GraphPropertyName {
 
     LABEL_WITH_POSTS,
     POST_WITH_LABELS,

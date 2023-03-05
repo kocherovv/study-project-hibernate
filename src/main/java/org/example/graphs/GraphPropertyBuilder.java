@@ -8,7 +8,9 @@ import java.util.Map;
 public class GraphPropertyBuilder {
 
     private final LabelGraphs labelGraphs;
+
     private final PostGraphs postGraphs;
+
     private final WriterGraphs writerGraphs;
 
     public GraphPropertyBuilder(Session session) {
@@ -17,10 +19,10 @@ public class GraphPropertyBuilder {
         writerGraphs = new WriterGraphs(session);
     }
 
-    public Map<String, Object> getProperty(GraphProperty graphProperty) {
+    public Map<String, Object> getProperty(GraphPropertyName graphPropertyName) {
         Object rootGraph = null;
 
-        switch (graphProperty) {
+        switch (graphPropertyName) {
             case LABEL_WITH_POSTS -> rootGraph = labelGraphs.withPosts();
             case POST_WITH_LABELS -> rootGraph = postGraphs.withLabels();
             case POST_WITH_WRITER -> rootGraph = postGraphs.withWriter();

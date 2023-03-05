@@ -3,8 +3,6 @@ package org.example.dto.mapper;
 import lombok.AllArgsConstructor;
 import org.example.domain.Post;
 import org.example.dto.PostReadDto;
-import org.example.repository.impl.LabelRepositoryImpl;
-import org.example.repository.impl.WriterRepositoryImpl;
 
 @AllArgsConstructor
 public class PostReadMapper implements Mapper<Post, PostReadDto> {
@@ -12,10 +10,6 @@ public class PostReadMapper implements Mapper<Post, PostReadDto> {
     private WriterReadMapper writerReadMapper;
 
     private LabelReadMapper labelReadMapper;
-
-    private LabelRepositoryImpl labelRepository;
-
-    private WriterRepositoryImpl writerRepository;
 
     @Override
     public PostReadDto mapFrom(Post source) {

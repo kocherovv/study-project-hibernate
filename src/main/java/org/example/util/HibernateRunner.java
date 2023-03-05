@@ -1,8 +1,9 @@
 package org.example.util;
 
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
+import org.example.dto.PostCreateDto;
 import org.example.dto.mapper.*;
-import org.example.graphs.GraphProperty;
 import org.example.graphs.GraphPropertyBuilder;
 import org.example.repository.impl.LabelRepositoryImpl;
 import org.example.repository.impl.PostRepositoryImpl;
@@ -13,7 +14,7 @@ import org.example.service.WriterService;
 
 import javax.transaction.Transactional;
 
-@Slf4j
+@Log4j
 public class HibernateRunner {
 
     @Transactional
@@ -29,10 +30,10 @@ public class HibernateRunner {
         var labelCreateMapper = new LabelCreateMapper(postRepository);
         var labelUpdateMapper = new LabelUpdateMapper();
         var labelReadMapper = new LabelReadMapper();
-        var writerReadMapper = new WriterReadMapper(postRepository);
-        var writerCreateMapper = new WriterCreateMapper(postRepository);
-        var postCreateMapper = new PostCreateMapper(writerReadMapper, labelRepository, writerRepository);
-        var postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper, labelRepository, writerRepository);
+        var writerReadMapper = new WriterReadMapper();
+        var writerCreateMapper = new WriterCreateMapper();
+        var postCreateMapper = new PostCreateMapper(labelRepository, writerRepository);
+        var postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper);
 
         var graphPropertyBuilder = new GraphPropertyBuilder(session);
 
@@ -40,9 +41,8 @@ public class HibernateRunner {
         var postService = new PostService(labelRepository, postRepository, writerRepository, postReadMapper, postCreateMapper, graphPropertyBuilder);
         var writerService = new WriterService(writerRepository, writerReadMapper, writerCreateMapper, graphPropertyBuilder);
 
-        labelService.findById(14L, labelUpdateMapper, GraphProperty.LABEL_WITH_POSTS).ifPresent(System.out::println);
+        labelService.deleteById(100L);
 
         session.getTransaction().commit();
-        System.out.println();
     }
 }

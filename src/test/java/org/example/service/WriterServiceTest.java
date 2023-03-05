@@ -1,13 +1,13 @@
 package org.example.service;
 
-import org.example.domain.Label;
 import org.example.domain.Post;
 import org.example.domain.Writer;
 import org.example.domain.enums.PostStatus;
-import org.example.dto.*;
+import org.example.dto.WriterCreateDto;
+import org.example.dto.WriterReadDto;
 import org.example.dto.mapper.*;
-import org.example.graphs.GraphProperty;
 import org.example.graphs.GraphPropertyBuilder;
+import org.example.graphs.GraphPropertyName;
 import org.example.repository.impl.LabelRepositoryImpl;
 import org.example.repository.impl.PostRepositoryImpl;
 import org.example.repository.impl.WriterRepositoryImpl;
@@ -57,10 +57,10 @@ public class WriterServiceTest {
         labelCreateMapper = new LabelCreateMapper(postRepository);
         labelUpdateMapper = new LabelUpdateMapper();
         labelReadMapper = new LabelReadMapper();
-        writerReadMapper = new WriterReadMapper(postRepository);
-        writerCreateMapper = new WriterCreateMapper(postRepository);
-        postCreateMapper = new PostCreateMapper(writerReadMapper, labelRepository, writerRepository);
-        postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper, labelRepository, writerRepository);
+        writerReadMapper = new WriterReadMapper();
+        writerCreateMapper = new WriterCreateMapper();
+        postCreateMapper = new PostCreateMapper(labelRepository, writerRepository);
+        postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper);
         graphPropertyBuilder = new GraphPropertyBuilder(session);
         labelService = new LabelService(labelRepository, labelCreateMapper, labelReadMapper, labelUpdateMapper, graphPropertyBuilder);
         postService = new PostService(labelRepository, postRepository, writerRepository, postReadMapper, postCreateMapper, graphPropertyBuilder);
@@ -77,9 +77,9 @@ public class WriterServiceTest {
         var writers = new ArrayList<Writer>();
 
         writers.add(Writer.builder()
-                .id(1L)
-                .lastName("asd")
-                .firstName("asd")
+            .id(1L)
+            .lastName("asd")
+            .firstName("asd")
             .build());
 
         writers.add(Writer.builder()
@@ -126,7 +126,7 @@ public class WriterServiceTest {
 
         var expectedResult = expectedEntity.map(writerReadMapper::mapFrom);
 
-        var returnedDto = writerService.findById(14L, writerReadMapper, GraphProperty.POST_WITH_LABELS_WRITERS);
+        var returnedDto = writerService.findById(14L, writerReadMapper, GraphPropertyName.POST_WITH_LABELS_WRITERS);
 
         assertEquals(expectedResult.get().getId(), returnedDto.get().getId());
         assertEquals(expectedResult.get().getFirstName(), returnedDto.get().getFirstName());
@@ -140,7 +140,7 @@ public class WriterServiceTest {
 
         var expected = Optional.empty();
 
-        var result = writerService.findById(1L, writerReadMapper, GraphProperty.POST_WITH_LABELS_WRITERS);
+        var result = writerService.findById(1L, writerReadMapper, GraphPropertyName.POST_WITH_LABELS_WRITERS);
 
         assertEquals(expected, result);
     }

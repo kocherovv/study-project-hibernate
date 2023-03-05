@@ -1,6 +1,7 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.Writer;
 import org.example.dto.WriterCreateDto;
@@ -8,8 +9,10 @@ import org.example.dto.WriterReadDto;
 import org.example.dto.mapper.Mapper;
 import org.example.dto.mapper.WriterCreateMapper;
 import org.example.dto.mapper.WriterReadMapper;
-import org.example.graphs.GraphProperty;
+import org.example.exception.NotFoundException;
 import org.example.graphs.GraphPropertyBuilder;
+import org.example.graphs.GraphPropertyName;
+import org.example.model.AppStatusCode;
 import org.example.repository.impl.WriterRepositoryImpl;
 
 import javax.transaction.Transactional;
@@ -17,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Slf4j
+@Log4j
 @Transactional
 public class WriterService {
 
@@ -42,8 +45,8 @@ public class WriterService {
             .map(mapper::mapFrom);
     }
 
-    public <T> Optional<T> findById(Long id, Mapper<Writer, T> mapper, GraphProperty graphProperty) {
-        return writerRepositoryImpl.findById(id, graphPropertyBuilder.getProperty(graphProperty))
+    public <T> Optional<T> findById(Long id, Mapper<Writer, T> mapper, GraphPropertyName graphPropertyName) {
+        return writerRepositoryImpl.findById(id, graphPropertyBuilder.getProperty(graphPropertyName))
             .map(mapper::mapFrom);
     }
 
@@ -63,9 +66,13 @@ public class WriterService {
         return writerReadDto;
     }
 
-    public void deleteById(Long id) {
-        var writer = writerRepositoryImpl.findById(id)
-            .orElse(null);
-        writerRepositoryImpl.delete(writer);
+    public void deleteById(Long id) throws NotFoundException {
+        var writer = writerRepositoryImpl.findById(id);
+
+        if (writer.isPresent()) {
+            writerRepositoryImpl.delete(writer.get());
+        } else {
+            throw new NotFoundException(AppStatusCode.NOT_FOUND_EXCEPTION);
+        }
     }
 }
