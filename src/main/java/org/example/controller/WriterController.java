@@ -29,7 +29,7 @@ public class WriterController {
         writerService.update(writerReadDto);
     }
 
-    public void deleteById(WriterReadDto id) {
+    public void deleteById(Long id) {
         writerService.deleteById(id);
     }
 }

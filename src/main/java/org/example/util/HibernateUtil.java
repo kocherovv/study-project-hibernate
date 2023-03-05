@@ -11,7 +11,7 @@ import java.lang.reflect.Proxy;
 @UtilityClass
 public class HibernateUtil {
 
-    public final SessionFactory sessionFactory = null;
+    public final SessionFactory sessionFactory = buildSessionFactory();
 
     public static Session getProxySession() {
         return (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(), new Class[]{Session.class},

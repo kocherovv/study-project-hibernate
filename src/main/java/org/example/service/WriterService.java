@@ -63,8 +63,8 @@ public class WriterService {
         return writerReadDto;
     }
 
-    public void deleteById(WriterReadDto writerReadDto) {
-        var writer = writerRepositoryImpl.findById(writerReadDto.getId())
+    public void deleteById(Long id) {
+        var writer = writerRepositoryImpl.findById(id)
             .orElse(null);
         writerRepositoryImpl.delete(writer);
     }

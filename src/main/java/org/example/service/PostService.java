@@ -64,9 +64,7 @@ public class PostService {
         post.setWriter(writerRepositoryImpl.findById(postReadDto.getWriterReadDto().getId())
             .orElseThrow(IllegalArgumentException::new));
 
-        postRepositoryImpl.update(post);
-
-        return postReadDto;
+        return postReadMapper.mapFrom(postRepositoryImpl.update(post));
     }
 
     public void deleteById(Long id) {

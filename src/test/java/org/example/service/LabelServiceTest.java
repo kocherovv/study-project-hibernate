@@ -15,8 +15,6 @@ import org.hibernate.Session;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import util.HibernateTestUtil;
 
 import java.time.LocalDateTime;
@@ -27,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 public class LabelServiceTest {
 
     private Session session;
@@ -239,6 +236,12 @@ public class LabelServiceTest {
 
     @Test
     void delete() {
+        when(labelRepository.findById(anyLong()))
+            .thenReturn(Optional.ofNullable(Label.builder()
+                .id(1L)
+                .name("123")
+                .build()));
+
         assertDoesNotThrow(() -> labelService.deleteById(anyLong()));
     }
 
