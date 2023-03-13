@@ -30,7 +30,7 @@ public class LabelRepositoryImpl extends RepositoryBase<Label, Long> implements 
     @Override
     public List<Label> findAllByPostId(Long postId) {
         var sql = "SELECT label.* " +
-            "FROM label RIGHT JOIN post_label " +
+            "FROM label JOIN post_label " +
             "ON post_label.label_id = label.id " +
             "WHERE post_label.post_id = :id";
 
