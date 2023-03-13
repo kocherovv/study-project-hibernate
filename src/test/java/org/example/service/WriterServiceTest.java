@@ -30,7 +30,7 @@ public class WriterServiceTest extends AbstractTestBase {
 
         session.beginTransaction();
 
-        buildTestContainer(session);
+        buildTestContainer();
     }
 
     @AfterEach

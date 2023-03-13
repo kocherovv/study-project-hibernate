@@ -5,46 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3400a196-9af5-4a8a-bd59-b10ad98bd3d9" name="Changes" comment="inWork_finishing">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/AbstractTestBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/LabelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/LabelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/WriterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/WriterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/Label.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/Label.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/Writer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/Writer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelCreateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelCreateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelReadDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelReadDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelUpdateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelUpdateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/PostCreateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/PostCreateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/PostReadDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/PostReadDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/WriterCreateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/WriterCreateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/WriterReadDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/WriterReadDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelCreateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelCreateMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelReadMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelReadMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelUpdateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelUpdateMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostCreateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostCreateMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostReadMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostReadMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterCreateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterCreateMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterReadMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterReadMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/GraphPropertyBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/graphs/GraphPropertyBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/GraphPropertyName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/graphs/GraphPropertyName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/LabelGraphs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/graphs/LabelGraphs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/PostGraphs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/graphs/PostGraphs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/WriterGraphs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/graphs/WriterGraphs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/CrudRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/CrudRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/LabelRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/LabelRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/PostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/RepositoryBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/RepositoryBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/WriterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/WriterRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/LabelRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/impl/LabelRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/PostRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/impl/PostRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/WriterRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/impl/WriterRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/LabelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/LabelService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/WriterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/WriterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/util/HibernateRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/util/HibernateRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/AbstractTestBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/AbstractTestBase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/LabelServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/LabelServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/PostServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/PostServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/WriterServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/WriterServiceTest.java" afterDir="false" />
@@ -155,8 +117,8 @@
       <recent name="org.example.dto.mapper" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'org.example.service'">
-    <configuration name="LabelServiceTest.delete_NotFound" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.LabelServiceTest">
+    <configuration name="LabelServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -169,7 +131,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.service.LabelServiceTest.delete_NotFound&quot;" />
+            <option value="&quot;org.example.service.LabelServiceTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -273,11 +235,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.LabelServiceTest" />
         <item itemvalue="Gradle.Tests in 'org.example.service'" />
         <item itemvalue="Gradle.LabelServiceTest.testUpdate_ReadDto" />
         <item itemvalue="Gradle.WriterServiceTest.delete_NotFound" />
         <item itemvalue="Gradle.PostServiceTest.delete_NotFound" />
-        <item itemvalue="Gradle.LabelServiceTest.delete_NotFound" />
       </list>
     </recent_temporary>
   </component>
@@ -291,7 +253,7 @@
       <updated>1676623269114</updated>
       <workItem from="1676623270299" duration="146509000" />
       <workItem from="1677656029155" duration="73901000" />
-      <workItem from="1678692199719" duration="5997000" />
+      <workItem from="1678692199719" duration="8491000" />
     </task>
     <task id="LOCAL-00001" summary="inWork">
       <created>1677076804162</created>
@@ -363,7 +325,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678004210403</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="inWork_finishing">
+      <created>1678699203467</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1678699203467</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

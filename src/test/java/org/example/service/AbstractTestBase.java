@@ -6,7 +6,6 @@ import org.example.database.repository.impl.LabelRepositoryImpl;
 import org.example.database.repository.impl.PostRepositoryImpl;
 import org.example.database.repository.impl.WriterRepositoryImpl;
 import org.example.dto.mapper.*;
-import org.hibernate.Session;
 
 import static org.mockito.Mockito.mock;
 
@@ -31,7 +30,7 @@ public abstract class AbstractTestBase {
 
     private GraphPropertyBuilder graphPropertyBuilder;
 
-    public final void buildTestContainer(Session session) {
+    public final void buildTestContainer() {
         postRepository = mock(PostRepositoryImpl.class);
         labelRepository = mock(LabelRepositoryImpl.class);
         writerRepository = mock(WriterRepositoryImpl.class);
@@ -43,7 +42,9 @@ public abstract class AbstractTestBase {
         writerCreateMapper = new WriterCreateMapper();
         postCreateMapper = new PostCreateMapper(labelRepository, writerRepository);
         postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper);
-        graphPropertyBuilder = new GraphPropertyBuilder(session);
+
+        graphPropertyBuilder = mock(GraphPropertyBuilder.class);
+
         labelService = new LabelService(labelRepository, labelCreateMapper, labelReadMapper, labelUpdateMapper, graphPropertyBuilder);
         postService = new PostService(labelRepository, postRepository, writerRepository, postReadMapper, postCreateMapper, graphPropertyBuilder);
         writerService = new WriterService(writerRepository, writerReadMapper, writerCreateMapper, graphPropertyBuilder);

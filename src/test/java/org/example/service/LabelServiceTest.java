@@ -30,7 +30,7 @@ public class LabelServiceTest extends AbstractTestBase {
 
         session.beginTransaction();
 
-        buildTestContainer(session);
+        buildTestContainer();
     }
 
     @AfterEach

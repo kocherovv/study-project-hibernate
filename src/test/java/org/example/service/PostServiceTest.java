@@ -31,7 +31,7 @@ public class PostServiceTest extends AbstractTestBase {
 
         session.beginTransaction();
 
-        buildTestContainer(session);
+        buildTestContainer();
     }
 
     @AfterEach
