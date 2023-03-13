@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.dto.LabelCreateDto;
 import org.example.dto.LabelReadDto;
 import org.example.dto.LabelUpdateDto;
@@ -9,7 +9,7 @@ import org.example.service.LabelService;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LabelController {
 
     private final LabelService labelService;

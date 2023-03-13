@@ -2,6 +2,9 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import org.example.database.graphs.GraphPropertyBuilder;
+import org.example.database.graphs.GraphPropertyName;
+import org.example.database.repository.impl.WriterRepositoryImpl;
 import org.example.domain.Writer;
 import org.example.dto.WriterCreateDto;
 import org.example.dto.WriterReadDto;
@@ -9,10 +12,7 @@ import org.example.dto.mapper.Mapper;
 import org.example.dto.mapper.WriterCreateMapper;
 import org.example.dto.mapper.WriterReadMapper;
 import org.example.exception.NotFoundException;
-import org.example.graphs.GraphPropertyBuilder;
-import org.example.graphs.GraphPropertyName;
 import org.example.model.AppStatusCode;
-import org.example.repository.impl.WriterRepositoryImpl;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -24,8 +24,10 @@ import java.util.Optional;
 public class WriterService {
 
     private final WriterRepositoryImpl writerRepositoryImpl;
+
     private final WriterReadMapper writerReadMapper;
     private final WriterCreateMapper writerCreateMapper;
+
     private final GraphPropertyBuilder graphPropertyBuilder;
 
     public List<WriterReadDto> findAll() {
@@ -66,12 +68,11 @@ public class WriterService {
     }
 
     public void deleteById(Long id) throws NotFoundException {
-        var writer = writerRepositoryImpl.findById(id);
-
-        if (writer.isPresent()) {
-            writerRepositoryImpl.delete(writer.get());
-        } else {
-            throw new NotFoundException(AppStatusCode.NOT_FOUND_EXCEPTION);
-        }
+        writerRepositoryImpl.findById(id).ifPresentOrElse(
+            writerRepositoryImpl::delete,
+            () -> {
+                throw new NotFoundException(AppStatusCode.NOT_FOUND_EXCEPTION);
+            }
+        );
     }
 }

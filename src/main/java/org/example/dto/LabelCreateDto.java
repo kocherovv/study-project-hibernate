@@ -1,19 +1,17 @@
 package org.example.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@Builder
 @Data
+@Builder
 public class LabelCreateDto {
 
-    private String name;
+    private final String name;
 
     @Builder.Default
-    private List<Long> posts_id = new ArrayList<>();
+    private final List<Long> posts_id = new ArrayList<>();
 }

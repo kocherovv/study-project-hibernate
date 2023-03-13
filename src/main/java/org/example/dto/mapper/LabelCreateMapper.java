@@ -1,14 +1,14 @@
 package org.example.dto.mapper;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.example.database.repository.impl.PostRepositoryImpl;
 import org.example.domain.Label;
 import org.example.dto.LabelCreateDto;
-import org.example.repository.impl.PostRepositoryImpl;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LabelCreateMapper implements Mapper<LabelCreateDto, Label> {
 
-    private PostRepositoryImpl postRepository;
+    private final PostRepositoryImpl postRepository;
 
     @Override
     public Label mapFrom(LabelCreateDto dto) {

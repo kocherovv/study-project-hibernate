@@ -2,6 +2,11 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import org.example.database.graphs.GraphPropertyBuilder;
+import org.example.database.graphs.GraphPropertyName;
+import org.example.database.repository.impl.LabelRepositoryImpl;
+import org.example.database.repository.impl.PostRepositoryImpl;
+import org.example.database.repository.impl.WriterRepositoryImpl;
 import org.example.domain.Post;
 import org.example.dto.PostCreateDto;
 import org.example.dto.PostReadDto;
@@ -9,12 +14,7 @@ import org.example.dto.mapper.Mapper;
 import org.example.dto.mapper.PostCreateMapper;
 import org.example.dto.mapper.PostReadMapper;
 import org.example.exception.NotFoundException;
-import org.example.graphs.GraphPropertyBuilder;
-import org.example.graphs.GraphPropertyName;
 import org.example.model.AppStatusCode;
-import org.example.repository.impl.LabelRepositoryImpl;
-import org.example.repository.impl.PostRepositoryImpl;
-import org.example.repository.impl.WriterRepositoryImpl;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -26,13 +26,10 @@ import java.util.Optional;
 public class PostService {
 
     private final LabelRepositoryImpl labelRepositoryImpl;
-
     private final PostRepositoryImpl postRepositoryImpl;
-
     private final WriterRepositoryImpl writerRepositoryImpl;
 
     private final PostReadMapper postReadMapper;
-
     private final PostCreateMapper postCreateMapper;
 
     private final GraphPropertyBuilder graphPropertyBuilder;
@@ -75,22 +72,20 @@ public class PostService {
     }
 
     public void deleteById(Long id) throws NotFoundException {
+        postRepositoryImpl.findById(id, graphPropertyBuilder
+            .getProperty(GraphPropertyName.POST_WITH_LABELS)).ifPresentOrElse(
+            post -> {
+                postRepositoryImpl.delete(post);
 
-        var postToDelete = postRepositoryImpl.findById(id, graphPropertyBuilder
-            .getProperty(GraphPropertyName.POST_WITH_LABELS));
-
-        if (postToDelete.isPresent()) {
-            postRepositoryImpl.delete(postToDelete.get());
-
-            var labelList = postToDelete.get().getLabels();
-
-            labelList.forEach(label -> {
-                if (label.getPosts().size() == 0) {
-                    labelRepositoryImpl.delete(label);
-                }
+                post.getLabels().forEach(
+                    label -> {
+                        if (label.getPosts().size() == 0) {
+                            labelRepositoryImpl.delete(label);
+                        }
+                    });
+            },
+            () -> {
+                throw new NotFoundException(AppStatusCode.NOT_FOUND_EXCEPTION);
             });
-        } else {
-            throw new NotFoundException(AppStatusCode.NOT_FOUND_EXCEPTION);
-        }
     }
 }

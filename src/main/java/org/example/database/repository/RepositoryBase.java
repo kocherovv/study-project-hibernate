@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.database.repository;
 
 import lombok.RequiredArgsConstructor;
 

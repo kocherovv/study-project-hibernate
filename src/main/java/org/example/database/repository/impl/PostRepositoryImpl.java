@@ -1,9 +1,9 @@
-package org.example.repository.impl;
+package org.example.database.repository.impl;
 
 import lombok.extern.log4j.Log4j;
+import org.example.database.repository.PostRepository;
+import org.example.database.repository.RepositoryBase;
 import org.example.domain.Post;
-import org.example.repository.PostRepository;
-import org.example.repository.RepositoryBase;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -22,8 +22,8 @@ public class PostRepositoryImpl extends RepositoryBase<Post, Long> implements Po
     public List<Post> findAllByLabelId(Long labelId) {
         var sql =
             "SELECT Post.* FROM Post " +
-            "JOIN PostLabel ON PostLabel.post_id = Post.id " +
-            "WHERE PostLabel.label_id = :id";
+                "JOIN PostLabel ON PostLabel.post_id = Post.id " +
+                "WHERE PostLabel.label_id = :id";
 
         return entityManager.createNativeQuery(sql, Post.class)
             .setParameter("id", labelId)

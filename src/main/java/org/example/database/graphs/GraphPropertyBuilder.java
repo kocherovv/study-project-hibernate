@@ -1,4 +1,4 @@
-package org.example.graphs;
+package org.example.database.graphs;
 
 import org.hibernate.Session;
 import org.hibernate.graph.GraphSemantic;

@@ -1,4 +1,4 @@
-package org.example.graphs;
+package org.example.database.graphs;
 
 import lombok.AllArgsConstructor;
 import org.example.domain.Post;

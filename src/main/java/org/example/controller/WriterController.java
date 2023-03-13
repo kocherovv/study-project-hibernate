@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.dto.WriterCreateDto;
 import org.example.dto.WriterReadDto;
 import org.example.service.WriterService;
@@ -8,7 +8,7 @@ import org.example.service.WriterService;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WriterController {
 
     private final WriterService writerService;

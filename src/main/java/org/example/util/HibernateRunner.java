@@ -1,11 +1,11 @@
 package org.example.util;
 
 import lombok.extern.log4j.Log4j;
+import org.example.database.graphs.GraphPropertyBuilder;
+import org.example.database.repository.impl.LabelRepositoryImpl;
+import org.example.database.repository.impl.PostRepositoryImpl;
+import org.example.database.repository.impl.WriterRepositoryImpl;
 import org.example.dto.mapper.*;
-import org.example.graphs.GraphPropertyBuilder;
-import org.example.repository.impl.LabelRepositoryImpl;
-import org.example.repository.impl.PostRepositoryImpl;
-import org.example.repository.impl.WriterRepositoryImpl;
 import org.example.service.LabelService;
 import org.example.service.PostService;
 import org.example.service.WriterService;

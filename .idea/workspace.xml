@@ -4,9 +4,50 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3400a196-9af5-4a8a-bd59-b10ad98bd3d9" name="Changes" comment="inWork_tests">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/LabelRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/LabelRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/PostRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/PostRepositoryImpl.java" afterDir="false" />
+    <list default="true" id="3400a196-9af5-4a8a-bd59-b10ad98bd3d9" name="Changes" comment="inWork_finishing">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/service/AbstractTestBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/LabelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/LabelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/PostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/WriterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/WriterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/Label.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/Label.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/domain/Writer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/Writer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelCreateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelCreateDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelReadDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelReadDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelUpdateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/LabelUpdateDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/PostCreateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/PostCreateDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/PostReadDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/PostReadDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/WriterCreateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/WriterCreateDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/WriterReadDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/WriterReadDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelCreateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelCreateMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelReadMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelReadMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelUpdateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/LabelUpdateMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostCreateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostCreateMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostReadMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/PostReadMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterCreateMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterCreateMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterReadMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/mapper/WriterReadMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/GraphPropertyBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/graphs/GraphPropertyBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/GraphPropertyName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/graphs/GraphPropertyName.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/LabelGraphs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/graphs/LabelGraphs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/PostGraphs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/graphs/PostGraphs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graphs/WriterGraphs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/graphs/WriterGraphs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/CrudRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/CrudRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/LabelRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/LabelRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/PostRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/RepositoryBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/RepositoryBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/WriterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/WriterRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/LabelRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/impl/LabelRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/PostRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/impl/PostRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/impl/WriterRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/database/repository/impl/WriterRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/LabelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/LabelService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/WriterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/WriterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/util/HibernateRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/util/HibernateRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/LabelServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/LabelServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/PostServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/PostServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/service/WriterServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/service/WriterServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,48 +127,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-19&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "openjdk-19",
+    "last_opened_file_path": "/Users/kocherov/IdeaProjects/untitled",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.example.dto.mapper" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.HibernateRunner">
-    <configuration name="HibernateRunner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.util.HibernateRunner" />
-      <module name="untitled.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PostServiceTest.testCreate" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.Tests in 'org.example.service'">
+    <configuration name="LabelServiceTest.delete_NotFound" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -140,7 +169,53 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.service.PostServiceTest.testCreate&quot;" />
+            <option value="&quot;org.example.service.LabelServiceTest.delete_NotFound&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="LabelServiceTest.testUpdate_ReadDto" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.service.LabelServiceTest.testUpdate_ReadDto&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="PostServiceTest.delete_NotFound" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.service.PostServiceTest.delete_NotFound&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -173,7 +248,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="WriterServiceTest.delete" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="WriterServiceTest.delete_NotFound" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -186,30 +261,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.service.WriterServiceTest.delete&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="WriterServiceTest.testCreate" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.example.service.WriterServiceTest.testCreate&quot;" />
+            <option value="&quot;org.example.service.WriterServiceTest.delete_NotFound&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -221,11 +273,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.HibernateRunner" />
         <item itemvalue="Gradle.Tests in 'org.example.service'" />
-        <item itemvalue="Gradle.WriterServiceTest.delete" />
-        <item itemvalue="Gradle.WriterServiceTest.testCreate" />
-        <item itemvalue="Gradle.PostServiceTest.testCreate" />
+        <item itemvalue="Gradle.LabelServiceTest.testUpdate_ReadDto" />
+        <item itemvalue="Gradle.WriterServiceTest.delete_NotFound" />
+        <item itemvalue="Gradle.PostServiceTest.delete_NotFound" />
+        <item itemvalue="Gradle.LabelServiceTest.delete_NotFound" />
       </list>
     </recent_temporary>
   </component>
@@ -238,7 +290,8 @@
       <option name="presentableId" value="Default" />
       <updated>1676623269114</updated>
       <workItem from="1676623270299" duration="146509000" />
-      <workItem from="1677656029155" duration="71660000" />
+      <workItem from="1677656029155" duration="73901000" />
+      <workItem from="1678692199719" duration="5997000" />
     </task>
     <task id="LOCAL-00001" summary="inWork">
       <created>1677076804162</created>
@@ -296,7 +349,21 @@
       <option name="project" value="LOCAL" />
       <updated>1678002148733</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="inWork_tests">
+      <created>1678002855004</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1678002855004</updated>
+    </task>
+    <task id="LOCAL-00010" summary="inWork_finishing">
+      <created>1678004210403</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1678004210403</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -320,7 +387,9 @@
     <MESSAGE value="inWork" />
     <MESSAGE value="inWork_optimisationQuery" />
     <MESSAGE value="inWork_tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="inWork_tests" />
+    <MESSAGE value="inWork_finish" />
+    <MESSAGE value="inWork_finishing" />
+    <option name="LAST_COMMIT_MESSAGE" value="inWork_finishing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -338,5 +407,8 @@
         <PinnedItemInfo parentTag="java.lang.Class" memberName="packageName" />
       </pinned-members>
     </pin-to-top-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/untitled$Tests_in__org_example_service_.ic" NAME="Tests in 'org.example.service' Coverage Results" MODIFIED="1678004131322" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

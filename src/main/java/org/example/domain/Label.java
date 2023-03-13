@@ -10,8 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(of = "name")
 @ToString(exclude = "posts")
+@EqualsAndHashCode(of = "name")
 @Entity
 @Table(name = "label")
 public class Label {

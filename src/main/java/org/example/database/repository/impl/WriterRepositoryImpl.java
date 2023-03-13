@@ -1,9 +1,9 @@
-package org.example.repository.impl;
+package org.example.database.repository.impl;
 
 import lombok.extern.log4j.Log4j;
+import org.example.database.repository.RepositoryBase;
+import org.example.database.repository.WriterRepository;
 import org.example.domain.Writer;
-import org.example.repository.RepositoryBase;
-import org.example.repository.WriterRepository;
 
 import javax.persistence.EntityManager;
 

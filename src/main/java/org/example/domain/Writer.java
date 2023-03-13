@@ -6,12 +6,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @ToString(exclude = "posts")
 @EqualsAndHashCode(of = {"firstName", "lastName"})
-@Builder
-@Data
 @Entity
 @Table(name = "writer")
 public class Writer {

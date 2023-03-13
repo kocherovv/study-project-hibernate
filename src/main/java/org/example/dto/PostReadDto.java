@@ -1,6 +1,5 @@
 package org.example.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.example.domain.enums.PostStatus;
@@ -9,23 +8,22 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 @Data
 @Builder
 public class PostReadDto {
 
-    private Long id;
+    private final Long id;
 
-    private WriterReadDto writerReadDto;
+    private final WriterReadDto writerReadDto;
 
-    private LocalDateTime created;
+    private final LocalDateTime created;
 
-    private LocalDateTime updated;
+    private final LocalDateTime updated;
 
-    private String content;
+    private final String content;
 
-    private PostStatus postStatus;
+    private final PostStatus postStatus;
 
     @Builder.Default
-    private List<LabelReadDto> labelsDto = new ArrayList<>();
+    private final List<LabelReadDto> labelsDto = new ArrayList<>();
 }

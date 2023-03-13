@@ -1,15 +1,13 @@
 package org.example.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-@AllArgsConstructor
-@Builder
 @Data
+@Builder
 public class LabelReadDto {
 
-    private Long id;
+    private final Long id;
 
-    private String name;
+    private final String name;
 }

@@ -1,15 +1,15 @@
 package org.example.dto.mapper;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.domain.Post;
 import org.example.dto.PostReadDto;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PostReadMapper implements Mapper<Post, PostReadDto> {
 
-    private WriterReadMapper writerReadMapper;
+    private final WriterReadMapper writerReadMapper;
 
-    private LabelReadMapper labelReadMapper;
+    private final LabelReadMapper labelReadMapper;
 
     @Override
     public PostReadDto mapFrom(Post source) {

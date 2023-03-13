@@ -1,17 +1,12 @@
 package org.example.service;
 
+import org.example.database.graphs.GraphPropertyName;
 import org.example.domain.Post;
 import org.example.domain.Writer;
 import org.example.domain.enums.PostStatus;
 import org.example.dto.WriterCreateDto;
 import org.example.dto.WriterReadDto;
-import org.example.dto.mapper.*;
 import org.example.exception.NotFoundException;
-import org.example.graphs.GraphPropertyBuilder;
-import org.example.graphs.GraphPropertyName;
-import org.example.repository.impl.LabelRepositoryImpl;
-import org.example.repository.impl.PostRepositoryImpl;
-import org.example.repository.impl.WriterRepositoryImpl;
 import org.hibernate.Session;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,24 +20,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class WriterServiceTest {
+public class WriterServiceTest extends AbstractTestBase {
 
     private Session session;
-
-    private PostRepositoryImpl postRepository;
-    private LabelRepositoryImpl labelRepository;
-    private WriterRepositoryImpl writerRepository;
-    private LabelCreateMapper labelCreateMapper;
-    private LabelUpdateMapper labelUpdateMapper;
-    private LabelReadMapper labelReadMapper;
-    private WriterReadMapper writerReadMapper;
-    private WriterCreateMapper writerCreateMapper;
-    private PostCreateMapper postCreateMapper;
-    private PostReadMapper postReadMapper;
-    private LabelService labelService;
-    private PostService postService;
-    private WriterService writerService;
-    private GraphPropertyBuilder graphPropertyBuilder;
 
     @BeforeEach
     void init() {
@@ -50,21 +30,7 @@ public class WriterServiceTest {
 
         session.beginTransaction();
 
-        postRepository = mock(PostRepositoryImpl.class);
-        labelRepository = mock(LabelRepositoryImpl.class);
-        writerRepository = mock(WriterRepositoryImpl.class);
-
-        labelCreateMapper = new LabelCreateMapper(postRepository);
-        labelUpdateMapper = new LabelUpdateMapper();
-        labelReadMapper = new LabelReadMapper();
-        writerReadMapper = new WriterReadMapper();
-        writerCreateMapper = new WriterCreateMapper();
-        postCreateMapper = new PostCreateMapper(labelRepository, writerRepository);
-        postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper);
-        graphPropertyBuilder = new GraphPropertyBuilder(session);
-        labelService = new LabelService(labelRepository, labelCreateMapper, labelReadMapper, labelUpdateMapper, graphPropertyBuilder);
-        postService = new PostService(labelRepository, postRepository, writerRepository, postReadMapper, postCreateMapper, graphPropertyBuilder);
-        writerService = new WriterService(writerRepository, writerReadMapper, writerCreateMapper, graphPropertyBuilder);
+        buildTestContainer(session);
     }
 
     @AfterEach
@@ -88,11 +54,11 @@ public class WriterServiceTest {
             .firstName("asd1")
             .build());
 
-        when(writerRepository.findAll()).thenReturn(writers);
+        when(getWriterRepository().findAll()).thenReturn(writers);
 
-        var expected = writers.stream().map(writerReadMapper::mapFrom).toList();
+        var expected = writers.stream().map(getWriterReadMapper()::mapFrom).toList();
 
-        var result = writerService.findAll();
+        var result = getWriterService().findAll();
 
         assertEquals(expected, result);
     }
@@ -122,11 +88,11 @@ public class WriterServiceTest {
 
         var expectedEntity = Optional.ofNullable(writer);
 
-        when(writerRepository.findById(anyLong(), anyMap())).thenReturn(expectedEntity);
+        when(getWriterRepository().findById(anyLong(), anyMap())).thenReturn(expectedEntity);
 
-        var expectedResult = expectedEntity.map(writerReadMapper::mapFrom);
+        var expectedResult = expectedEntity.map(getWriterReadMapper()::mapFrom);
 
-        var returnedDto = writerService.findById(14L, writerReadMapper, GraphPropertyName.POST_WITH_LABELS_WRITERS);
+        var returnedDto = getWriterService().findById(14L, getWriterReadMapper(), GraphPropertyName.POST_WITH_LABELS_WRITERS);
 
         assertEquals(expectedResult.get().getId(), returnedDto.get().getId());
         assertEquals(expectedResult.get().getFirstName(), returnedDto.get().getFirstName());
@@ -136,11 +102,11 @@ public class WriterServiceTest {
 
     @Test
     void testFindById_Not_Found() {
-        when(writerRepository.findById(anyLong(), anyMap())).thenReturn(Optional.empty());
+        when(getWriterRepository().findById(anyLong(), anyMap())).thenReturn(Optional.empty());
 
         var expected = Optional.empty();
 
-        var result = writerService.findById(1L, writerReadMapper, GraphPropertyName.POST_WITH_LABELS_WRITERS);
+        var result = getWriterService().findById(1L, getWriterReadMapper(), GraphPropertyName.POST_WITH_LABELS_WRITERS);
 
         assertEquals(expected, result);
     }
@@ -164,11 +130,11 @@ public class WriterServiceTest {
             .id(1L)
             .build();
 
-        var expectedDto = writerReadMapper.mapFrom(outputEntity);
+        var expectedDto = getWriterReadMapper().mapFrom(outputEntity);
 
-        when(writerRepository.create(inputEntity)).thenReturn(outputEntity);
+        when(getWriterRepository().create(inputEntity)).thenReturn(outputEntity);
 
-        var result = writerService.create(inputDto);
+        var result = getWriterService().create(inputDto);
 
         assertEquals(expectedDto, result);
     }
@@ -193,12 +159,12 @@ public class WriterServiceTest {
             .firstName("123")
             .build();
 
-        var expectedDto = writerReadMapper.mapFrom(updatedEntity);
+        var expectedDto = getWriterReadMapper().mapFrom(updatedEntity);
 
-        when(writerRepository.findById(inputDto.getId())).thenReturn(Optional.ofNullable(oldEntity));
-        when(writerRepository.update(updatedEntity)).thenReturn(updatedEntity);
+        when(getWriterRepository().findById(inputDto.getId())).thenReturn(Optional.ofNullable(oldEntity));
+        when(getWriterRepository().update(updatedEntity)).thenReturn(updatedEntity);
 
-        var result = writerService.update(inputDto);
+        var result = getWriterService().update(inputDto);
 
         assertEquals(expectedDto.getId(), result.getId());
         assertEquals(expectedDto.getLastName(), result.getFirstName());
@@ -212,16 +178,16 @@ public class WriterServiceTest {
             .firstName("123")
             .build();
 
-        when(writerRepository.findById(anyLong())).thenReturn(Optional.ofNullable(writer));
+        when(getWriterRepository().findById(anyLong())).thenReturn(Optional.ofNullable(writer));
 
-        assertDoesNotThrow(() -> writerService.deleteById(1L));
+        assertDoesNotThrow(() -> getWriterService().deleteById(1L));
     }
 
     @Test
     void delete_NotFound() {
-        when(writerRepository.findById(anyLong()))
+        when(getWriterRepository().findById(anyLong()))
             .thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> writerService.deleteById(1L));
+        assertThrows(NotFoundException.class, () -> getWriterService().deleteById(1L));
     }
 }

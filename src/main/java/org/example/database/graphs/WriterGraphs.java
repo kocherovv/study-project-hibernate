@@ -1,17 +1,17 @@
-package org.example.graphs;
+package org.example.database.graphs;
 
 import lombok.AllArgsConstructor;
-import org.example.domain.Label;
+import org.example.domain.Writer;
 import org.hibernate.Session;
 import org.hibernate.graph.RootGraph;
 
 @AllArgsConstructor
-public class LabelGraphs {
+public class WriterGraphs {
 
     private Session session;
 
-    public RootGraph<Label> withPosts() {
-        var entityGraphs = session.createEntityGraph(Label.class);
+    public RootGraph<Writer> withPosts() {
+        var entityGraphs = session.createEntityGraph(Writer.class);
         entityGraphs.addAttributeNode("posts");
 
         return entityGraphs;

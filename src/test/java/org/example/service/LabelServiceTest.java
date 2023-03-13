@@ -1,18 +1,12 @@
 package org.example.service;
 
+import org.example.database.graphs.GraphPropertyName;
 import org.example.domain.Label;
 import org.example.domain.Post;
 import org.example.domain.enums.PostStatus;
 import org.example.dto.LabelCreateDto;
-import org.example.dto.LabelReadDto;
 import org.example.dto.LabelUpdateDto;
-import org.example.dto.mapper.*;
 import org.example.exception.NotFoundException;
-import org.example.graphs.GraphPropertyBuilder;
-import org.example.graphs.GraphPropertyName;
-import org.example.repository.impl.LabelRepositoryImpl;
-import org.example.repository.impl.PostRepositoryImpl;
-import org.example.repository.impl.WriterRepositoryImpl;
 import org.hibernate.Session;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,24 +20,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class LabelServiceTest {
+public class LabelServiceTest extends AbstractTestBase {
 
     private Session session;
-
-    private PostRepositoryImpl postRepository;
-    private LabelRepositoryImpl labelRepository;
-    private WriterRepositoryImpl writerRepository;
-    private LabelCreateMapper labelCreateMapper;
-    private LabelUpdateMapper labelUpdateMapper;
-    private LabelReadMapper labelReadMapper;
-    private WriterReadMapper writerReadMapper;
-    private WriterCreateMapper writerCreateMapper;
-    private PostCreateMapper postCreateMapper;
-    private PostReadMapper postReadMapper;
-    private LabelService labelService;
-    private PostService postService;
-    private WriterService writerService;
-    private GraphPropertyBuilder graphPropertyBuilder;
 
     @BeforeEach
     void init() {
@@ -51,21 +30,7 @@ public class LabelServiceTest {
 
         session.beginTransaction();
 
-        postRepository = mock(PostRepositoryImpl.class);
-        labelRepository = mock(LabelRepositoryImpl.class);
-        writerRepository = mock(WriterRepositoryImpl.class);
-
-        labelCreateMapper = new LabelCreateMapper(postRepository);
-        labelUpdateMapper = new LabelUpdateMapper();
-        labelReadMapper = new LabelReadMapper();
-        writerReadMapper = new WriterReadMapper();
-        writerCreateMapper = new WriterCreateMapper();
-        postCreateMapper = new PostCreateMapper(labelRepository, writerRepository);
-        postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper);
-        graphPropertyBuilder = new GraphPropertyBuilder(session);
-        labelService = new LabelService(labelRepository, labelCreateMapper, labelReadMapper, labelUpdateMapper, graphPropertyBuilder);
-        postService = new PostService(labelRepository, postRepository, writerRepository, postReadMapper, postCreateMapper, graphPropertyBuilder);
-        writerService = new WriterService(writerRepository, writerReadMapper, writerCreateMapper, graphPropertyBuilder);
+        buildTestContainer(session);
     }
 
     @AfterEach
@@ -86,11 +51,11 @@ public class LabelServiceTest {
             .name("222")
             .build());
 
-        when(labelRepository.findAll()).thenReturn(labels);
+        when(getLabelRepository().findAll()).thenReturn(labels);
 
-        var expected = labels.stream().map(labelReadMapper::mapFrom).toList();
+        var expected = labels.stream().map(getLabelReadMapper()::mapFrom).toList();
 
-        var result = labelService.findAll();
+        var result = getLabelService().findAll();
 
         assertEquals(expected, result);
     }
@@ -117,11 +82,11 @@ public class LabelServiceTest {
 
         var expectedLabel = Optional.ofNullable(label);
 
-        when(labelRepository.findById(anyLong(), anyMap())).thenReturn(expectedLabel);
+        when(getLabelRepository().findById(anyLong(), anyMap())).thenReturn(expectedLabel);
 
-        var expectedResult = expectedLabel.map(labelUpdateMapper::mapFrom);
+        var expectedResult = expectedLabel.map(getLabelUpdateMapper()::mapFrom);
 
-        var returnedDto = labelService.findById(14L, labelUpdateMapper, GraphPropertyName.LABEL_WITH_POSTS);
+        var returnedDto = getLabelService().findById(14L, getLabelUpdateMapper(), GraphPropertyName.LABEL_WITH_POSTS);
 
         System.out.println();
 
@@ -132,11 +97,11 @@ public class LabelServiceTest {
 
     @Test
     void testFindById_Not_Found() {
-        when(labelRepository.findById(anyLong(), anyMap())).thenReturn(Optional.empty());
+        when(getLabelRepository().findById(anyLong(), anyMap())).thenReturn(Optional.empty());
 
         var expected = Optional.empty();
 
-        var result = labelService.findById(1L, labelUpdateMapper, GraphPropertyName.LABEL_WITH_POSTS);
+        var result = getLabelService().findById(1L, getLabelUpdateMapper(), GraphPropertyName.LABEL_WITH_POSTS);
 
         assertEquals(expected, result);
     }
@@ -179,10 +144,10 @@ public class LabelServiceTest {
             .posts_id(postsId)
             .build();
 
-        when(postRepository.findById(anyLong())).thenReturn(Optional.ofNullable(post));
-        when(labelRepository.create(inputEntity)).thenReturn(outputEntity);
+        when(getPostRepository().findById(anyLong())).thenReturn(Optional.ofNullable(post));
+        when(getLabelRepository().create(inputEntity)).thenReturn(outputEntity);
 
-        var result = labelService.create(inputDto);
+        var result = getLabelService().create(inputDto);
 
         assertEquals(expectedDto, result);
     }
@@ -227,31 +192,31 @@ public class LabelServiceTest {
             .posts_id(postsId)
             .build();
 
-        when(labelRepository.findById(updatedEntity.getId())).thenReturn(Optional.ofNullable(oldEntity));
-        when(labelRepository.update(updatedEntity)).thenReturn(updatedEntity);
+        when(getLabelRepository().findById(updatedEntity.getId())).thenReturn(Optional.ofNullable(oldEntity));
+        when(getLabelRepository().update(updatedEntity)).thenReturn(updatedEntity);
 
-        var result = labelService.update(inputDto);
+        var result = getLabelService().update(inputDto);
 
         assertEquals(expectedDto, result);
     }
 
     @Test
     void delete_Found() {
-        when(labelRepository.findById(anyLong()))
+        when(getLabelRepository().findById(anyLong()))
             .thenReturn(Optional.ofNullable(Label.builder()
                 .id(1L)
                 .name("123")
                 .build()));
 
-        assertDoesNotThrow(() -> labelService.deleteById(1L));
+        assertDoesNotThrow(() -> getLabelService().deleteById(1L));
     }
 
     @Test
     void delete_NotFound() {
-        when(labelRepository.findById(anyLong()))
+        when(getLabelRepository().findById(anyLong()))
             .thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> labelService.deleteById(anyLong()));
+        assertThrows(NotFoundException.class, () -> getLabelService().deleteById(anyLong()));
     }
 
     @Test
@@ -263,11 +228,11 @@ public class LabelServiceTest {
 
         var expectedLabel = Optional.ofNullable(label);
 
-        when(labelRepository.findByName(anyString())).thenReturn(expectedLabel);
+        when(getLabelRepository().findByName(anyString())).thenReturn(expectedLabel);
 
-        var expectedResult = expectedLabel.map(labelReadMapper::mapFrom);
+        var expectedResult = expectedLabel.map(getLabelReadMapper()::mapFrom);
 
-        var returnedDto = labelService.findByName("test");
+        var returnedDto = getLabelService().findByName("test");
 
         System.out.println();
 
@@ -277,11 +242,11 @@ public class LabelServiceTest {
 
     @Test
     void testFindByName_Not_Found() {
-        when(labelRepository.findByName(anyString())).thenReturn(Optional.empty());
+        when(getLabelRepository().findByName(anyString())).thenReturn(Optional.empty());
 
         var expected = Optional.empty();
 
-        var result = labelService.findByName("test");
+        var result = getLabelService().findByName("test");
 
         assertEquals(expected, result);
     }

@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.database.repository;
 
 import java.io.Serializable;
 import java.util.Collections;

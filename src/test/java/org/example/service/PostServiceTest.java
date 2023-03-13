@@ -1,18 +1,13 @@
 package org.example.service;
 
+import org.example.database.graphs.GraphPropertyName;
 import org.example.domain.Label;
 import org.example.domain.Post;
 import org.example.domain.Writer;
 import org.example.domain.enums.PostStatus;
 import org.example.dto.PostCreateDto;
 import org.example.dto.PostReadDto;
-import org.example.dto.mapper.*;
 import org.example.exception.NotFoundException;
-import org.example.graphs.GraphPropertyBuilder;
-import org.example.graphs.GraphPropertyName;
-import org.example.repository.impl.LabelRepositoryImpl;
-import org.example.repository.impl.PostRepositoryImpl;
-import org.example.repository.impl.WriterRepositoryImpl;
 import org.hibernate.Session;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,24 +21,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class PostServiceTest {
+public class PostServiceTest extends AbstractTestBase {
 
     private Session session;
-
-    private PostRepositoryImpl postRepository;
-    private LabelRepositoryImpl labelRepository;
-    private WriterRepositoryImpl writerRepository;
-    private LabelCreateMapper labelCreateMapper;
-    private LabelUpdateMapper labelUpdateMapper;
-    private LabelReadMapper labelReadMapper;
-    private WriterReadMapper writerReadMapper;
-    private WriterCreateMapper writerCreateMapper;
-    private PostCreateMapper postCreateMapper;
-    private PostReadMapper postReadMapper;
-    private LabelService labelService;
-    private PostService postService;
-    private WriterService writerService;
-    private GraphPropertyBuilder graphPropertyBuilder;
 
     @BeforeEach
     void init() {
@@ -51,21 +31,7 @@ public class PostServiceTest {
 
         session.beginTransaction();
 
-        postRepository = mock(PostRepositoryImpl.class);
-        labelRepository = mock(LabelRepositoryImpl.class);
-        writerRepository = mock(WriterRepositoryImpl.class);
-
-        labelCreateMapper = new LabelCreateMapper(postRepository);
-        labelUpdateMapper = new LabelUpdateMapper();
-        labelReadMapper = new LabelReadMapper();
-        writerReadMapper = new WriterReadMapper();
-        writerCreateMapper = new WriterCreateMapper();
-        postCreateMapper = new PostCreateMapper(labelRepository, writerRepository);
-        postReadMapper = new PostReadMapper(writerReadMapper, labelReadMapper);
-        graphPropertyBuilder = new GraphPropertyBuilder(session);
-        labelService = new LabelService(labelRepository, labelCreateMapper, labelReadMapper, labelUpdateMapper, graphPropertyBuilder);
-        postService = new PostService(labelRepository, postRepository, writerRepository, postReadMapper, postCreateMapper, graphPropertyBuilder);
-        writerService = new WriterService(writerRepository, writerReadMapper, writerCreateMapper, graphPropertyBuilder);
+        buildTestContainer(session);
     }
 
     @AfterEach
@@ -103,11 +69,11 @@ public class PostServiceTest {
             .content("asd")
             .build());
 
-        when(postRepository.findAll()).thenReturn(posts);
+        when(getPostRepository().findAll()).thenReturn(posts);
 
-        var expected = posts.stream().map(postReadMapper::mapFrom).toList();
+        var expected = posts.stream().map(getPostReadMapper()::mapFrom).toList();
 
-        var result = postService.findAll();
+        var result = getPostService().findAll();
 
         assertEquals(expected, result);
     }
@@ -140,11 +106,11 @@ public class PostServiceTest {
 
         var expectedPost = Optional.ofNullable(post);
 
-        when(postRepository.findById(anyLong(), anyMap())).thenReturn(expectedPost);
+        when(getPostRepository().findById(anyLong(), anyMap())).thenReturn(expectedPost);
 
-        var expectedResult = expectedPost.map(postReadMapper::mapFrom);
+        var expectedResult = expectedPost.map(getPostReadMapper()::mapFrom);
 
-        var returnedDto = postService.findById(14L, postReadMapper, GraphPropertyName.POST_WITH_LABELS_WRITERS);
+        var returnedDto = getPostService().findById(14L, getPostReadMapper(), GraphPropertyName.POST_WITH_LABELS_WRITERS);
 
         assertEquals(expectedResult.get().getId(), returnedDto.get().getId());
         assertEquals(expectedResult.get().getContent(), returnedDto.get().getContent());
@@ -155,11 +121,11 @@ public class PostServiceTest {
 
     @Test
     void testFindById_Not_Found() {
-        when(postRepository.findById(anyLong(), anyMap())).thenReturn(Optional.empty());
+        when(getPostRepository().findById(anyLong(), anyMap())).thenReturn(Optional.empty());
 
         var expected = Optional.empty();
 
-        var result = postService.findById(1L, postReadMapper, GraphPropertyName.POST_WITH_LABELS_WRITERS);
+        var result = getPostService().findById(1L, getPostReadMapper(), GraphPropertyName.POST_WITH_LABELS_WRITERS);
 
         assertEquals(expected, result);
     }
@@ -205,13 +171,13 @@ public class PostServiceTest {
             .content("test")
             .build();
 
-        var expectedDto = postReadMapper.mapFrom(outputEntity);
+        var expectedDto = getPostReadMapper().mapFrom(outputEntity);
 
-        when(labelRepository.findById(anyLong())).thenReturn(Optional.ofNullable(label));
-        when(writerRepository.findById(anyLong())).thenReturn(Optional.ofNullable(writer));
-        when(postRepository.create(inputEntity)).thenReturn(outputEntity);
+        when(getLabelRepository().findById(anyLong())).thenReturn(Optional.ofNullable(label));
+        when(getWriterRepository().findById(anyLong())).thenReturn(Optional.ofNullable(writer));
+        when(getPostRepository().create(inputEntity)).thenReturn(outputEntity);
 
-        var result = postService.create(inputDto);
+        var result = getPostService().create(inputDto);
 
         assertEquals(expectedDto, result);
     }
@@ -227,7 +193,7 @@ public class PostServiceTest {
 
         labels.add(label);
 
-        var labelsDto = labels.stream().map(labelReadMapper::mapFrom).toList();
+        var labelsDto = labels.stream().map(getLabelReadMapper()::mapFrom).toList();
 
         var writer = Writer.builder()
             .id(1L)
@@ -235,7 +201,7 @@ public class PostServiceTest {
             .firstName("123")
             .build();
 
-        var writerDto = writerReadMapper.mapFrom(writer);
+        var writerDto = getWriterReadMapper().mapFrom(writer);
 
         var inputDto = PostReadDto.builder()
             .id(1L)
@@ -264,13 +230,13 @@ public class PostServiceTest {
             .content("test")
             .build();
 
-        var expectedDto = postReadMapper.mapFrom(updatedEntity);
+        var expectedDto = getPostReadMapper().mapFrom(updatedEntity);
 
-        when(writerRepository.findById(inputDto.getWriterReadDto().getId())).thenReturn(Optional.of(writer));
-        when(postRepository.findById(inputDto.getId())).thenReturn(Optional.ofNullable(oldEntity));
-        when(postRepository.update(updatedEntity)).thenReturn(updatedEntity);
+        when(getWriterRepository().findById(inputDto.getWriterReadDto().getId())).thenReturn(Optional.of(writer));
+        when(getPostRepository().findById(inputDto.getId())).thenReturn(Optional.ofNullable(oldEntity));
+        when(getPostRepository().update(updatedEntity)).thenReturn(updatedEntity);
 
-        var result = postService.update(inputDto);
+        var result = getPostService().update(inputDto);
 
         assertEquals(expectedDto.getId(), result.getId());
         assertEquals(expectedDto.getCreated(), result.getCreated());
@@ -302,16 +268,16 @@ public class PostServiceTest {
 
         post.setLabels(labels);
 
-        when(postRepository.findById(anyLong(), anyMap())).thenReturn(Optional.ofNullable(post));
+        when(getPostRepository().findById(anyLong(), anyMap())).thenReturn(Optional.ofNullable(post));
 
-        assertDoesNotThrow(() -> postService.deleteById(1L));
+        assertDoesNotThrow(() -> getPostService().deleteById(1L));
     }
 
     @Test
     void delete_NotFound() {
-        when(postRepository.findById(anyLong()))
+        when(getPostRepository().findById(anyLong()))
             .thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> postService.deleteById(1L));
+        assertThrows(NotFoundException.class, () -> getPostService().deleteById(1L));
     }
 }

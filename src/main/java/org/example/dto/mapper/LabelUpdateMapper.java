@@ -1,11 +1,9 @@
 package org.example.dto.mapper;
 
-import lombok.AllArgsConstructor;
 import org.example.domain.Label;
 import org.example.domain.Post;
 import org.example.dto.LabelUpdateDto;
 
-@AllArgsConstructor
 public class LabelUpdateMapper implements Mapper<Label, LabelUpdateDto> {
 
     @Override

@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.dto.PostCreateDto;
 import org.example.dto.PostReadDto;
 import org.example.service.PostService;
@@ -8,7 +8,7 @@ import org.example.service.PostService;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
